@@ -1,0 +1,135 @@
+-- Main configuration file for Haskell project.
+-- For more info about Cabal file format please see Cabal User's Guide:
+-- https://www.haskell.org/cabal/users-guide/developing-packages.html
+
+-- Common info about project.
+name:                breadu
+version:             0.1.0
+
+synopsis:            Bread Unit calculator
+description:         Bread Unit calculator for diabetics.
+
+homepage:            https://breadu.info
+license:             MIT
+license-file:        LICENSE
+author:              Denis Shevchenko
+maintainer:          me@dshevchenko.biz
+copyright:           2017 Denis Shevchenko
+
+category:            Web
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+
+-- Section for 'breadu' library. This library is actually
+-- an essence of the project.
+library
+  -- This is where library modules live.
+  hs-source-dirs:      lib
+  -- This is an "opened" modules of a library.
+  -- It means we can import these (and only these)
+  -- modules in other libraries/programs.
+  exposed-modules:     BreadU
+  other-modules:       BreadU.API
+                       BreadU.Handlers
+                       BreadU.Server
+                       -- Common types.
+                       BreadU.Types
+                       -- Tools for preparing and for actual work.
+                       BreadU.Tools.Calculator
+                       BreadU.Tools.CommonFood
+                       BreadU.Tools.FoodInfoParser
+                       BreadU.Tools.FoodSuggestions
+                       BreadU.Tools.Validators
+                       -- Custom errors (for example, HTTP 404).
+                       BreadU.Pages.Errors
+                       -- Names for pages' elements.
+                       BreadU.Pages.Names
+                       -- Types that represents pages' skeletons.
+                       BreadU.Pages.Types
+                       -- Own style and script.
+                       BreadU.Pages.CSS.Names
+                       BreadU.Pages.CSS.Own
+                       BreadU.Pages.JS.Own
+                       BreadU.Pages.JS.SocialButtons
+                       -- Language-specific content.
+                       BreadU.Pages.Content.Header
+                       BreadU.Pages.Content.Footer
+                       BreadU.Pages.Content.IndexBody
+                       BreadU.Pages.Content.Errors.HTTP404
+                       BreadU.Pages.Content.Errors.Messages
+                       -- HTML markup for pages.
+                       BreadU.Pages.Markup.IndexPage
+                       BreadU.Pages.Markup.Common.Header
+                       BreadU.Pages.Markup.Common.Footer
+                       BreadU.Pages.Markup.Common.HeadTag
+                       BreadU.Pages.Markup.Common.Resources
+                       BreadU.Pages.Markup.Common.Utils
+                       BreadU.Pages.Markup.Errors.HTTP404
+  -- Dependencies we need to build a library.
+  -- Versions of these packages are defined by Haskell LTS,
+  -- please see value of 'resolver' field in 'stack.yaml'.
+  -- You can check packages' versions at https://www.stackage.org/VALUE_OF_RESOLVER.
+  -- Good practice - keep this list in alphabetical order.
+  build-depends:       aeson
+                     , base
+                     , blaze-html
+                     , blaze-markup
+                     , bytestring
+                     , cassava
+                     , clay
+                     , double-conversion
+                     , extra
+                     , hasmin
+                     , hjsmin
+                     , http-api-data
+                     , http-types
+                     , random
+                     , servant
+                     , servant-blaze
+                     , servant-server
+                     , split
+                     , string-qq
+                     , text
+                     , text-show
+                     , transformers
+                     , unordered-containers
+                     , vector
+                     , wai
+                     , warp
+  -- These options will be passed to GHC compiler during build of library.
+  -- Good advice: use -Werror, it'll help you.
+  ghc-options:         -Wall -Werror -O2 -Wno-orphans
+  -- Haskell 2010 Standard.
+  default-language:    Haskell2010
+  -- GHC extensions that will be active in all modules by default.
+  default-extensions:  RecordWildCards
+                       OverloadedStrings
+
+-- Section for 'breadu-exe' program
+-- This program is very simple, it just uses 'breadu' library.
+executable breadu-exe
+  -- This is where program's modules live.
+  hs-source-dirs:      app
+  -- This is module where 'main' function is defined.
+  main-is:             Main.hs
+  other-modules:       CLI
+  -- Dependencies for a program. Main dependency is 'breadu' library.
+  build-depends:       base
+                     , breadu
+                     , directory
+                     , extra
+                     , optparse-simple
+  -- These options will be passed to GHC compiler during build of program.
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O2
+  -- Haskell 2010 Standard.
+  default-language:    Haskell2010
+  -- GHC extensions that will be active in all modules by default.
+  default-extensions:  RecordWildCards
+
+
+-- Full path to project's repository. BTW, not only Git is supported.
+source-repository head
+  type:     git
+  location: https://github.com/denisshevchenko/breadu.info.git

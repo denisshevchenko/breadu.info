@@ -1,0 +1,46 @@
+# Configuration file for CircleCI service, I'm using it for CI and CD.
+# Please see https://circleci.com for more info.
+
+general:
+  branches:
+    only:
+      # The only branch we build from is a `master`, other branches will be ignored.
+      - master
+
+dependencies:
+  # We want to cache this directory, in this case all packages from dependencies will be compiled just once.
+  cache_directories:
+    - "~/.stack"
+  # Install Haskell Stack, specific for Ubuntu 14.04 (default distributive on CircleCI Linux servers).
+  pre:
+    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442
+    - echo 'deb http://download.fpcomplete.com/ubuntu precise main'|sudo tee /etc/apt/sources.list.d/fpco.list
+    - sudo apt-get update && sudo apt-get install stack -y
+  override:
+    # Setup proper version of GHC. 
+    - stack setup
+    # Build a project.
+    - stack build
+
+# Run test suite (if it exists).
+test:
+  override:
+    - stack test
+
+# Deployment section. Commands from this section will be run only after successful building.
+deployment:
+  production:
+    # We deploy from the 'master' branch only.
+    branch: master
+    commands:
+      # Copy static files to a server. Static files will be served by Nginx.
+      # Assumed that current user may copy it to /var/www.
+      - scp -r static/* dshevchenko@breadu.info:/var/www/
+      # Copy common food list to a server.
+      - scp -r food dshevchenko@breadu.info:breadu-root/
+      # Copy executable file to a server, temporary place.
+      - scp -r $(stack path --local-install-root)/bin/breadu-exe dshevchenko@breadu.info:/tmp/
+      # Copy update script to a server.
+      - scp update_breadu_server.sh dshevchenko@breadu.info:breadu-root/
+      # Execute update script on a server.
+      - ssh dshevchenko@breadu.info "bash /home/dshevchenko/breadu-root/update_breadu_server.sh"

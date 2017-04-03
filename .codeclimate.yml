@@ -1,0 +1,13 @@
+# Configuration file for Code Climate service, please see https://codeclimate.com/ for more info.
+
+# We want to review Haskell code only, so enable 'hlint' engine.
+# Hlint suggests corrections for our code, and most of them are great!
+# Please see https://hackage.haskell.org/package/hlint for more details.
+engines:
+  hlint:
+    enabled: true
+
+# Review all Haskell modules.
+ratings:
+  paths:
+  - "**.hs"
