@@ -28,9 +28,7 @@ commonFooter FooterContent{..} = footer $
         div ! A.class_ "col-xl-4 col-lg-4 col-md-4 col-sm-5 col-xs-12" $ socialButtons
   where
     authorInfo = div ! A.class_ (toValue AuthorInfo) $ do
-        span "© "
         span $ toHtml authorName
-        span " 2017"
         
         span ! A.class_ (toValue AuthorInfoMailToSeparator) $ mempty
         

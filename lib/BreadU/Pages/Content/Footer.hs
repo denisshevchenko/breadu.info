@@ -17,12 +17,12 @@ import           BreadU.Pages.Types     ( LangCode(..), FooterContent(..) )
 -- | Localized content for page's footer .
 footerContent :: LangCode -> FooterContent
 footerContent Ru = FooterContent
-    { authorName        = "Денис Шевченко"
+    { authorName        = "© Денис Шевченко, 2017"
     , emailToAuthor     = "Напишите мне"
     , tweetLabel        = "Твитнуть"
     }
 footerContent En = FooterContent
-    { authorName        = "Denis Shevchenko"
+    { authorName        = "© 2017 Denis Shevchenko"
     , emailToAuthor     = "Email me"
     , tweetLabel        = "Tweet"
     }
