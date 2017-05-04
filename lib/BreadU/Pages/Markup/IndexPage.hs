@@ -54,7 +54,7 @@ instance ToMarkup IndexPage where
         -- from the parts in the same context.
         docType
         html ! A.lang (toValue $ showt langCode) $ do
-            commonHeadTag (siteName headerContentForIndex)
+            commonHeadTag (siteTitle headerContentForIndex)
                           (metaDescription headerContentForIndex)
             body $ do
                 div ! A.class_ "container" $ do

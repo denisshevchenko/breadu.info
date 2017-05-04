@@ -22,7 +22,7 @@ import qualified Text.Blaze.Html5.Attributes        as A
 
 -- | Footer for all pages.
 commonFooter :: FooterContent -> Html
-commonFooter FooterContent{..} = footer $ do
+commonFooter FooterContent{..} = footer $
     row_ $ do
         div ! A.class_ "col-xl-8 col-lg-8 col-md-8 col-sm-7 col-xs-12" $ authorInfo
         div ! A.class_ "col-xl-4 col-lg-4 col-md-4 col-sm-5 col-xs-12" $ socialButtons

@@ -51,6 +51,7 @@ data HeaderContent = HeaderContent
     , aboutLabel          :: Text
     , aboutTitle          :: Text
     , siteName            :: Text
+    , siteTitle           :: Text
     , briefDescription    :: Text
     , buDescription       :: Text
     , howToUseItTitle     :: Text
