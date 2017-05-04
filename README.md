@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/denisshevchenko/breadu.info.svg?style=svg&circle-token=17c278ce24f3329b9d2f8039410020ead3f9ecb2)](https://circleci.com/gh/denisshevchenko/breadu.info)&nbsp;&nbsp;&nbsp;[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/denisshevchenko/breadu.info)
+[![CircleCI](https://circleci.com/gh/denisshevchenko/breadu.info.svg?style=shield&circle-token=17c278ce24f3329b9d2f8039410020ead3f9ecb2)](https://circleci.com/gh/denisshevchenko/breadu.info)&nbsp;&nbsp;&nbsp;&nbsp;[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/denisshevchenko/breadu.info)
 
 # Bread Unit
 
