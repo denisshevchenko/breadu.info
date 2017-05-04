@@ -98,10 +98,16 @@ ownCss = minify . Lazy.toStrict . render $ do
         paddingTopEm    2.2
         fontSizeEm      1.4
 
+    cl Or ? do
+        centerAlign
+        paddingTopEm    0.90
+        fontSizeEm      1.0
+
     cl AddFood ?
         paddingTopEm    3.2
     
     cl AddFoodButton ? do
+        -- There's no embedded '!important', so we have to specify raw CSS here. :-(
         "padding-left"  -: "0.1em !important"
         "padding-right" -: "0.1em !important"
         borderRadius    (em 1.65) (em 0) (em 0) (em 1.65)
@@ -125,7 +131,7 @@ ownCss = minify . Lazy.toStrict . render $ do
 
     cl RemoveIconFoodForm ? do
         fontSizeEm      2.0
-        color           "#aaa"
+        color           "#999"
         position        absolute
         top             (em 0) 
         right           (em 0)
@@ -173,6 +179,19 @@ ownCss = minify . Lazy.toStrict . render $ do
     -- | These classes aren't mine, it's from Bootstrap Material Design.
     ".btn-rounded" ?
         borderRadiusAll (em 10)
+
+    ".btn-info" ?
+        backgroundColor linksColor
+
+    ".btn-info:hover, .btn-info:focus, .btn-info:active" ? do
+        "background-color" -: "#0587D1 !important"
+
+    ".btn-outline-info" ? do
+        border          solid (px 2) linksColor
+        "color"         -: "#0375b6 !important"
+    
+    ".btn-outline-info:hover, .btn-outline-info:focus, .btn-outline-info:active" ? do
+        "border"        -: "2px solid #0587D1 !important"
   where
     centerAlign     = textAlign . alignSide $ sideCenter
     rightAlign      = textAlign . alignSide $ sideRight
@@ -195,12 +214,12 @@ ownCss = minify . Lazy.toStrict . render $ do
 
     simpleLinks = do
         a           ? color linksColor
-        a # hover   ? textDecoration none
+        a # hover   ? color "#0587D1" >> textDecoration none
         a # link    ? textDecoration none
         a # visited ? textDecoration none
         a # active  ? textDecoration none
 
-    linksColor = "#1b95e0"
+    linksColor = "#0375b6"
 
 -- | Minify CSS. We shouldn't check 'Left'-variant from 'minifyCSS' function
 -- because we're minifying generated CSS and assuming that it's definitely valid. ;-)

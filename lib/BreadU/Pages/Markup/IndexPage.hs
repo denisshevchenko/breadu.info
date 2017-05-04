@@ -116,14 +116,16 @@ firstFoodItem IndexBodyContent{..} =
         ! A.id (toValue FoodFormFirstItem) $
         div ! A.class_ (toValue FoodFormItemInputs) $ do
             row_ $ do
-                col_8 $ foodDataInput (showt FirstFoodPrefix <> showt FoodNameInputPostfix) FoodInputClass foodNameLabel
-                col_4 $ foodDataInput (showt FirstFoodPrefix <> showt CarbsInputPostfix) CarbsInputClass carbsLabel
+                col_7 $ foodDataInput (showt FirstFoodPrefix <> showt FoodNameInputPostfix) FoodInputClass foodNameLabel
+                col_2 $ div ! A.class_ (toValue Or) $ toHtml orAnotherValue
+                col_3 $ foodDataInput (showt FirstFoodPrefix <> showt CarbsInputPostfix) CarbsInputClass carbsLabel
 
             div ! A.class_ (toValue FoodFormRowsSeparator) $ mempty
             
             row_ $ do
-                col_6 $ foodDataInput (showt FirstFoodPrefix <> showt BUInputPostfix) BUInputClass buLabel
-                col_6 $ foodDataInput (showt FirstFoodPrefix <> showt GramsInputPostfix) GramsInputClass gramsLabel
+                col_5 $ foodDataInput (showt FirstFoodPrefix <> showt BUInputPostfix) BUInputClass buLabel
+                col_2 $ div ! A.class_ (toValue Or) $ toHtml orAnotherValue
+                col_5 $ foodDataInput (showt FirstFoodPrefix <> showt GramsInputPostfix) GramsInputClass gramsLabel
 
 -- | Return 'Text' with rendered HTML. It will be sent as a response to AJAX POST-request
 -- after user clicked to Add new food in calculation.
@@ -138,14 +140,16 @@ newFoodItemCommon IndexBodyContent{..} idPrefix =
         ! A.id (toValue thisFoodItemId) $ do
         div ! A.class_ (toValue FoodFormItemInputs) $ do
             row_ $ do
-                col_8 $ foodDataInput (idPrefix <> showt FoodNameInputPostfix) FoodInputClass foodNameLabel
-                col_4 $ foodDataInput (idPrefix <> showt CarbsInputPostfix) CarbsInputClass carbsLabel
+                col_7 $ foodDataInput (idPrefix <> showt FoodNameInputPostfix) FoodInputClass foodNameLabel
+                col_2 $ div ! A.class_ (toValue Or) $ toHtml orAnotherValue
+                col_3 $ foodDataInput (idPrefix <> showt CarbsInputPostfix) CarbsInputClass carbsLabel
 
             div ! A.class_ (toValue FoodFormRowsSeparator) $ mempty
             
             row_ $ do
-                col_6 $ foodDataInput (idPrefix <> showt BUInputPostfix) BUInputClass buLabel
-                col_6 $ foodDataInput (idPrefix <> showt GramsInputPostfix) GramsInputClass gramsLabel
+                col_5 $ foodDataInput (idPrefix <> showt BUInputPostfix) BUInputClass buLabel
+                col_2 $ div ! A.class_ (toValue Or) $ toHtml orAnotherValue
+                col_5 $ foodDataInput (idPrefix <> showt GramsInputPostfix) GramsInputClass gramsLabel
             
         div ! A.class_ (toValue RemoveIconFoodForm) $
             a ! A.onclick (toValue $ removeDOMItemBy thisFoodItemId)

@@ -90,7 +90,8 @@ data IndexBodyContent = IndexBodyContent
     , addFoodTitle        :: Text -- ^
     , calculateLabel      :: Text -- ^
     , calculateTitle      :: Text -- ^
-    , removeFoodItemTitle :: Text
+    , removeFoodItemTitle :: Text -- ^
+    , orAnotherValue      :: Text -- ^
     }
 
 -- | Skeleton type that represents index page.

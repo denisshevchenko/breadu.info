@@ -38,6 +38,7 @@ data ClassName
     | CarbsInputClass
     | BUInputClass
     | GramsInputClass
+    | Or
     | AddFood
     | AddFoodButton
     | Calculate

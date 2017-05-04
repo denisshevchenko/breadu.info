@@ -4,7 +4,8 @@ Description : Exposed module of 'breadu' library
 Stability   : experimental
 Portability : POSIX
 
-Exposed module of 'breadu' library. 'breadu-exe' app uses this module to run a server.
+Exposed module of 'breadu' library. 'breadu-exe' app uses this module to run a server,
+please see "BreadU.Server" module for details.
 -}
 
 module BreadU

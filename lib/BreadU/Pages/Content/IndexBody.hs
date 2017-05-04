@@ -26,6 +26,7 @@ indexBodyContent Ru = IndexBodyContent
     , calculateLabel      = "Посчитать"
     , calculateTitle      = "Посчитать граммы и ХЕ"
     , removeFoodItemTitle = "Удалить этот продукт из расчёта"
+    , orAnotherValue      = "или"
     }
 indexBodyContent En = IndexBodyContent
     { foodNameLabel       = "Food name"
@@ -37,4 +38,5 @@ indexBodyContent En = IndexBodyContent
     , calculateLabel      = "Calculate"
     , calculateTitle      = "Calculate grams and BU"
     , removeFoodItemTitle = "Delete this food from calculation"
+    , orAnotherValue      = "or"
     }
