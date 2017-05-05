@@ -36,16 +36,20 @@ function submitFoodForm( langCode ) {
         event.preventDefault(); // Stop form from submitting normally.
         // Send main food form via AJAX POST-request.
         $.post( langCode + "/calculate", $( foodFormId ).serialize(), function( result ) {
-            // We don't need to check results and errors, because
-            // one (and only one) from these list is definitely empty.
-
             // Shows calculated results if they're here.
-            $.each( result.results, function( i, idAndValue ) {
-                var arr = jQuery.makeArray( idAndValue );
-                var inputId = "#" + arr[0];
-                var value = arr[1];
-                $( inputId ).focus().delay( 200 ).val( value );
-            });
+            if ( result.results.length > 0 ) {
+                var totalBUArr = jQuery.makeArray( result.results[0] );
+                var totalBUId = "#" + totalBUArr[0];
+                var totalBUValue = totalBUArr[1];
+                $( totalBUId ).delay( 200 ).text( totalBUValue ); 
+
+                $.each( result.results.slice(1), function( i, idAndValue ) {
+                    var arr = jQuery.makeArray( idAndValue );
+                    var inputId = "#" + arr[0];
+                    var value = arr[1];
+                    $( inputId ).focus().delay( 200 ).val( value );
+                });
+            }
 
             // Shows errors if they're here.
             $.each( result.badInputs, function( i, idAndMessage ) {

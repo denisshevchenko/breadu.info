@@ -22,6 +22,7 @@ import           Data.Text      ( pack )
 -}
 data ElementName
     = FoodFormId
+    | TotalBUQuantityId
     | FirstFoodPrefix
     | FoodNameInputPostfix
     | CarbsInputPostfix

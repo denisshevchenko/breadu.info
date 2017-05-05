@@ -102,6 +102,12 @@ ownCss = minify . Lazy.toStrict . render $ do
         centerAlign
         paddingTopEm    0.90
         fontSizeEm      1.0
+    
+    cl TotalBUQuantity ? do
+        paddingTopEm    0.8
+        paddingLeftEm   1.1
+        fontSizeEm      1.15
+        color           "#454545"
 
     cl AddFood ?
         paddingTopEm    3.2

@@ -39,6 +39,7 @@ data ClassName
     | BUInputClass
     | GramsInputClass
     | Or
+    | TotalBUQuantity
     | AddFood
     | AddFoodButton
     | Calculate

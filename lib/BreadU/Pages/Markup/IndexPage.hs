@@ -79,6 +79,7 @@ foodFormBlock langCode content@IndexBodyContent{..} = div ! A.class_ (toValue Fo
          ! A.id (toValue $ show FoodFormId <> unpack (showt langCode))
          ! A.action (toValue $ calculateFoodLink langCode) $ do
         firstFoodItem content
+        totalBUQuantity
         row_ $ do
             div ! A.class_ "col-4 col-xs-5" $ addFoodButton
             div ! A.class_ "col-8 col-xs-7" $ calculateButton
@@ -101,6 +102,10 @@ foodFormBlock langCode content@IndexBodyContent{..} = div ! A.class_ (toValue Fo
             span ! A.class_ (toValue MainButtonIcon) $ fa "fa-calculator"
             span ! A.class_ (toValue MainButtonIconSeparator) $ mempty
             toHtml calculateLabel
+
+    totalBUQuantity = div ! A.class_ (toValue TotalBUQuantity) $ do
+        span $ toHtml totalBULabel
+        span ! A.id (toValue TotalBUQuantityId) $ "0"
 
     -- | When user will click to Add button - AJAX POST-request will be sent and new food item will be added.
     addNewFoodItem :: Text

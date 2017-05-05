@@ -87,6 +87,7 @@ data IndexBodyContent = IndexBodyContent
     , carbsLabel          :: Text -- ^ "Carbs" input's label.
     , buLabel             :: Text -- ^ "BU" input's label.
     , gramsLabel          :: Text -- ^ "Grams" input's label.
+    , totalBULabel        :: Text -- ^ "Total BU: " label.
     , addFoodLabel        :: Text -- ^ "Add" button's label.
     , addFoodTitle        :: Text -- ^ "Add" button's title.
     , calculateLabel      :: Text -- ^ "Calculate" button's label.
