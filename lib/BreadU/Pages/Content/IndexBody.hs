@@ -17,7 +17,7 @@ import           BreadU.Pages.Types     ( LangCode(..), IndexBodyContent(..) )
 -- | Localized content for index page's body.
 indexBodyContent :: LangCode -> IndexBodyContent
 indexBodyContent Ru = IndexBodyContent
-    { foodNameLabel       = "Название продукта"
+    { foodNameLabel       = "Продукт"
     , carbsLabel          = "Углеводы"
     , buLabel             = "в ХЕ"
     , gramsLabel          = "в граммах"

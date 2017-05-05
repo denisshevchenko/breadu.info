@@ -32,10 +32,12 @@ import           Data.List                      ( sum )
 
 -- | Calculate BU/Grams values. 
 calculate :: FoodInfo -> Food -> [Result]
-calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults
+calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU value is always first, for simplicity.
   where
     buAndGramsResults = concatMap calculateItemValues items
 
+    -- Take all BU values, sum them as numbers and convert again
+    -- to the 'Text' with the same rounding.
     totalBUValue :: Result
     totalBUValue = (showt TotalBUQuantityId, roundAsText buSum)
       where
@@ -62,7 +64,8 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults
 
         buAndGramsValues = doCalculate maybeBU maybeGrams carbohydrates
 
-        -- Convert grams to BU and vice versa.
+        -- Convert grams to BU and vice versa. BU value is always here
+        -- because of calculationg of the total BU value.
         doCalculate :: Maybe Text -> Maybe Text -> CarbPer100g -> [Maybe Result]
         doCalculate Nothing    (Just grams') carbs = [Just (buInputId, roundAsText $ convertGramsToBU carbs (asDouble grams'))]
         doCalculate (Just bu') Nothing       carbs = [ Just (buInputId, bu')
@@ -73,7 +76,8 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults
 
 asDouble :: Text -> Double
 asDouble rawNumber = let Right (number, _) = double rawNumber in number
-        
+
+-- | Round number with fixed precision (1 digit after point) and convert it to 'Text'.
 roundAsText :: Double -> Text
 roundAsText = toFixed 1
 

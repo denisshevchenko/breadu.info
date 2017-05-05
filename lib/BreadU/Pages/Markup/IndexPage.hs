@@ -63,6 +63,8 @@ instance ToMarkup IndexPage where
                     commonFooter footerContentForIndex
                 allScripts
 
+    -- Render preEscaped-text. It's for raw HTML-tags in the text,
+    -- sometimes it's useful.
     preEscapedToMarkup = toMarkup
 
 -- | HTML-based redirection to language-specific index page.
@@ -94,6 +96,7 @@ foodFormBlock langCode content@IndexBodyContent{..} = div ! A.class_ (toValue Fo
             span ! A.class_ (toValue MainButtonIconSeparator) $ mempty
             toHtml addFoodLabel
 
+    -- This button should be submit-button, in this case it can be clicked by Enter key.
     calculateButton = div ! A.class_ (toValue Calculate) $
         button ! A.class_ (toValue $ "btn btn-info btn-lg btn-block " <> showt CalculateButton)
                ! A.id (toValue CalculateButtonId)
@@ -109,7 +112,8 @@ foodFormBlock langCode content@IndexBodyContent{..} = div ! A.class_ (toValue Fo
 
     -- | When user will click to Add button - AJAX POST-request will be sent and new food item will be added.
     addNewFoodItem :: Text
-    addNewFoodItem = ajaxPOST (addFoodLink langCode) $ "$('#" <> showt FoodFormFirstItem <> "').append(response.itemHTML)"
+    addNewFoodItem = ajaxPOST (addFoodLink langCode) $
+        "$('#" <> showt FoodFormFirstItem <> "').append(response.itemHTML)"
 
 {-|
    First food item is always here, always at the top and cannot be removed.
@@ -185,7 +189,8 @@ foodDataInput commonName additionalClass aLabel = div ! A.class_ "md-form" $ do
         if thisIsFoodInput then A.list (toValue datalistId) else mempty
 
     foodInputDatalistIfRequired =
-        if thisIsFoodInput then datalist ! A.id (toValue datalistId) $ "" else mempty
+        -- <datalist>-tag is supported by almost all modern browsers. Sorry, Safari...
+        if thisIsFoodInput then datalist ! A.id (toValue datalistId) $ mempty else mempty
     
     datalistId = commonName <> "datalist"
 

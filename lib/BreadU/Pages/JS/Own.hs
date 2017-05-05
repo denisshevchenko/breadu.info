@@ -38,15 +38,18 @@ function submitFoodForm( langCode ) {
         $.post( langCode + "/calculate", $( foodFormId ).serialize(), function( result ) {
             // Shows calculated results if they're here.
             if ( result.results.length > 0 ) {
+                // We know that total BU value is always first element.
                 var totalBUArr = jQuery.makeArray( result.results[0] );
                 var totalBUId = "#" + totalBUArr[0];
                 var totalBUValue = totalBUArr[1];
                 $( totalBUId ).delay( 200 ).text( totalBUValue ); 
 
+                // Slice to miss the first element because it's already handled.
                 $.each( result.results.slice(1), function( i, idAndValue ) {
                     var arr = jQuery.makeArray( idAndValue );
                     var inputId = "#" + arr[0];
                     var value = arr[1];
+                    // Delay 200 ms is for Bootstrap dynamic label movement.
                     $( inputId ).focus().delay( 200 ).val( value );
                 });
             }
