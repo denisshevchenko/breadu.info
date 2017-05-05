@@ -25,14 +25,14 @@ import qualified Data.HashMap.Strict            as HM
 import           Data.Double.Conversion.Text    ( toFixed )
 import           Data.Text.Read                 ( double )
 import           Data.Text                      ( Text )
-import           Data.Maybe                     ( isJust, fromJust )
+import           Data.Maybe                     ( isJust, fromJust, catMaybes )
 
--- | Calculate food values. In this point we definitely know that values are valid because of success validation.
+-- | Calculate BU/Grams values. 
 calculate :: FoodInfo -> Food -> [Result]
 calculate FoodInfo{..} commonFood = concatMap calculateItemValues items
   where
     calculateItemValues :: FoodItem -> [Result]
-    calculateItemValues FoodItem{..} = carbsValue ++ doCalculate maybeBU maybeGrams carbohydrates
+    calculateItemValues FoodItem{..} = catMaybes [carbsValue, doCalculate maybeBU maybeGrams carbohydrates]
       where
         (_,            maybeFood)   = foodName
         (carbInputId,  maybeCarbs)  = carbPer100g
@@ -47,14 +47,15 @@ calculate FoodInfo{..} commonFood = concatMap calculateItemValues items
                              else let Right (number, _) = double . fromJust $ maybeCarbs
                                   in number
 
-        carbsValue = if foodNameIsHere then [(carbInputId, roundAsText carbohydrates)] else []
+        carbsValue = if foodNameIsHere then Just (carbInputId, roundAsText carbohydrates) else Nothing
         
-        -- | Convert grams to BU and vice versa.
-        doCalculate :: Maybe Text -> Maybe Text -> CarbPer100g -> [Result]
-        doCalculate Nothing    (Just grams') carbs = [(buInputId,    roundAsText $ convertGramsToBU carbs (asDouble grams'))]
-        doCalculate (Just bu') Nothing       carbs = [(gramsInputId, roundAsText $ convertBUToGrams carbs (asDouble bu'))]
-        doCalculate (Just _)   (Just _)      _     = []
-        doCalculate Nothing    Nothing       _     = []
+        -- Convert grams to BU and vice versa.
+        doCalculate :: Maybe Text -> Maybe Text -> CarbPer100g -> Maybe Result
+        doCalculate Nothing    (Just grams') carbs = Just (buInputId,    roundAsText $ convertGramsToBU carbs (asDouble grams'))
+        doCalculate (Just bu') Nothing       carbs = Just (gramsInputId, roundAsText $ convertBUToGrams carbs (asDouble bu'))
+        -- Just for pattern matching completeness.
+        doCalculate (Just _)   (Just _)      _     = Nothing
+        doCalculate Nothing    Nothing       _     = Nothing
 
         -- We definitely know that rawNumber contains a valid number.
         asDouble :: Text -> Double
