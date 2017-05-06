@@ -189,6 +189,15 @@ ownCss = minify . Lazy.toStrict . render $ do
     ".btn-info" ?
         backgroundColor linksColor
 
+    ".btn.btn-sm" ? do
+        paddingTopEm    0.9
+        paddingBottomEm 0.8
+
+    ".btn.btn-lg" ? do
+        fontSizeEm      0.9
+        paddingTopEm    1.08
+        paddingBottomEm 1.0
+
     ".btn-info:hover, .btn-info:focus, .btn-info:active" ? do
         "background-color" -: "#0587D1 !important"
 
