@@ -182,7 +182,7 @@ ownCss = minify . Lazy.toStrict . render $ do
     cl Block404Description ?
         fontSizeEm      1.05
 
-    -- | These classes aren't mine, it's from Bootstrap Material Design.
+    -- | All classes below aren't mine, it's from Bootstrap Material Design.
     ".btn-rounded" ?
         borderRadiusAll (em 10)
 
