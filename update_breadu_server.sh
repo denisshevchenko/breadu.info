@@ -5,6 +5,9 @@ set -euo pipefail
 # common food and static files already copied here from the CI-server.
 # Assumed that current user can do sudo-commands without password, for simplicity.
 
+# Good practice: check script's correctness after each changing. I recommend 'shellcheck',
+# please see https://github.com/koalaman/shellcheck for more info.
+
 readonly EXECUTABLE_NAME=breadu-exe
 readonly ROOT_DIR=/home/dshevchenko/breadu-root
 readonly PATH_TO_COMMON_FOOD="${ROOT_DIR}"/food/common.csv
