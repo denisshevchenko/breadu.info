@@ -52,6 +52,7 @@ library
                        BreadU.Pages.CSS.Names
                        BreadU.Pages.CSS.Own
                        BreadU.Pages.JS.Own
+                       BreadU.Pages.JS.GA
                        BreadU.Pages.JS.SocialButtons
                        -- Language-specific content.
                        BreadU.Pages.Content.Header

@@ -11,8 +11,9 @@ module BreadU.Pages.Markup.Common.HeadTag
     ( commonHeadTag
     ) where
 
-import           BreadU.Pages.Markup.Common.Resources   ( allStyles )
 import           BreadU.API                             ( staticImages )
+import           BreadU.Pages.Markup.Common.Resources   ( allStyles )
+import           BreadU.Pages.JS.GA                     ( googleAnalytics )
 
 import           Prelude                                hiding ( head )
 import           Data.Text                              ( Text )
@@ -41,4 +42,6 @@ commonHeadTag aTitle metaDescription =
              ! A.type_ "image/png"
              ! A.href (toValue $ staticImages <> "favicon.png")
         -- Load all CSS we need.
-        allStyles 
+        allStyles
+        -- GA.
+        script $ toHtml googleAnalytics
