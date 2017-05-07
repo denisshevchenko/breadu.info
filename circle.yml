@@ -39,8 +39,8 @@ deployment:
       # Copy common food list to a server.
       - scp -r food dshevchenko@breadu.info:breadu-root/
       # Copy executable file to a server, temporary place.
-      - scp -r $(stack path --local-install-root)/bin/breadu-exe dshevchenko@breadu.info:/tmp/
-      # Copy update script to a server.
-      - scp update_breadu_server.sh dshevchenko@breadu.info:breadu-root/
-      # Execute update script on a server.
-      - ssh dshevchenko@breadu.info "bash /home/dshevchenko/breadu-root/update_breadu_server.sh"
+      - scp $(stack path --local-install-root)/bin/breadu-exe dshevchenko@breadu.info:/tmp/
+      # Copy update program to a server.
+      - scp $(stack path --local-install-root)/bin/update-breadu-server dshevchenko@breadu.info:breadu-root/
+      # Run update program on a server.
+      - ssh dshevchenko@breadu.info "/home/dshevchenko/breadu-root/update_breadu_server"

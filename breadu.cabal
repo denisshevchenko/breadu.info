@@ -129,6 +129,23 @@ executable breadu-exe
   default-extensions:  RecordWildCards
 
 
+-- Section for 'update-breadu-server' program.
+-- We're using this program to update breadu-server on production server.
+executable update-breadu-server
+  -- This is where program's modules live.
+  hs-source-dirs:      update
+  -- This is module where 'main' function is defined.
+  main-is:             Main.hs
+  -- Dependencies for a program. Main dependency is 'breadu' library.
+  build-depends:       base
+                     , filepath
+                     , shell-conduit
+  -- These options will be passed to GHC compiler during build of program.
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O2
+  -- Haskell 2010 Standard.
+  default-language:    Haskell2010
+
+
 -- Full path to project's repository. BTW, not only Git is supported.
 source-repository head
   type:     git
