@@ -42,3 +42,16 @@ indexBodyContent En = IndexBodyContent
     , removeFoodItemTitle = "Delete this food from calculation"
     , orAnotherValue      = "or"
     }
+indexBodyContent De = IndexBodyContent
+    { foodNameLabel       = "Lebensmittel"
+    , carbsLabel          = "Kohlenhydrate"
+    , buLabel             = "in Brotgerät"
+    , gramsLabel          = "in Gramm"
+    , totalBULabel        = "Gesamtzahl BG: "
+    , addFoodLabel        = "Hinzufügen"
+    , addFoodTitle        = "Füge noch ein Lebensmittel hinzu"
+    , calculateLabel      = "Berechnen"
+    , calculateTitle      = "Berechnen Sie Gramm und BG"
+    , removeFoodItemTitle = "Löschen Sie dieses Lebensmittel aus der Berechnung"
+    , orAnotherValue      = "oder"
+    }

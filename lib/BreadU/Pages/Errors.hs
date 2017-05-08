@@ -32,7 +32,9 @@ http404 :: Maybe ClientLanguage -> Application
 http404 langHeader _ sendResponse =
     sendResponse $ responseLBS status404 httpHeaders $ case langHeader of
     Just (ClientLanguage language) ->
-        if showt Ru `T.isPrefixOf` language then page404 Ru else page404 En
+        if | showt Ru `T.isPrefixOf` language -> page404 Ru
+           | showt De `T.isPrefixOf` language -> page404 De
+           | otherwise                        -> page404 En
     Nothing -> page404 En
   where
     page404 langCode = renderMarkup $ http404Markup (http404Content langCode)

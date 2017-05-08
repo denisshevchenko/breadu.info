@@ -107,6 +107,7 @@ library
   -- GHC extensions that will be active in all modules by default.
   default-extensions:  RecordWildCards
                        OverloadedStrings
+                       MultiWayIf
 
 -- Section for 'breadu-exe' program
 -- This program is very simple, it just uses 'breadu' library.

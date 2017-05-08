@@ -83,8 +83,9 @@ type NotFoundEndpoint =
 -- | Types for prefixes of language-specific endpoints. Don't confuse it
 -- with 'LangCode' type! These types are for Servant "type-level magic" only,
 -- actually it's a type-level literals.
-type RU = "ru"
 type EN = "en"
+type DE = "de"
+type RU = "ru"
 
 -- | Type for whole API, we combine types for each endpoint into a single type 'API'.
 -- You can think of :<|> operator as of 'OR' operator.
@@ -96,6 +97,9 @@ type API =
     :<|> EN :> IndexPageEndpoint
     :<|> EN :> AddFoodEndpoint
     :<|> EN :> CalculateFoodEndpoint
+    :<|> DE :> IndexPageEndpoint
+    :<|> DE :> AddFoodEndpoint
+    :<|> DE :> CalculateFoodEndpoint
     :<|> AutoCompleteEndpoint
     :<|> StaticEndpoint
     :<|> NotFoundEndpoint
@@ -110,16 +114,19 @@ api = Proxy
    we represent them as a Text-based links.
 -}
 indexPageLink :: LangCode -> Text
-indexPageLink Ru = showt $ safeLink api (Proxy @(RU :> IndexPageEndpoint))
 indexPageLink En = showt $ safeLink api (Proxy @(EN :> IndexPageEndpoint))
+indexPageLink De = showt $ safeLink api (Proxy @(DE :> IndexPageEndpoint))
+indexPageLink Ru = showt $ safeLink api (Proxy @(RU :> IndexPageEndpoint))
 
 addFoodLink :: LangCode -> Text
-addFoodLink Ru = showt $ safeLink api (Proxy @(RU :> AddFoodEndpoint))
 addFoodLink En = showt $ safeLink api (Proxy @(EN :> AddFoodEndpoint))
+addFoodLink De = showt $ safeLink api (Proxy @(DE :> AddFoodEndpoint))
+addFoodLink Ru = showt $ safeLink api (Proxy @(RU :> AddFoodEndpoint))
 
 calculateFoodLink :: LangCode -> Text
-calculateFoodLink Ru = showt $ safeLink api (Proxy @(RU :> CalculateFoodEndpoint))
 calculateFoodLink En = showt $ safeLink api (Proxy @(EN :> CalculateFoodEndpoint))
+calculateFoodLink De = showt $ safeLink api (Proxy @(DE :> CalculateFoodEndpoint))
+calculateFoodLink Ru = showt $ safeLink api (Proxy @(RU :> CalculateFoodEndpoint))
 
 autoCompleteLink :: Text
 autoCompleteLink = showt $ safeLink api (Proxy @AutoCompleteEndpoint)

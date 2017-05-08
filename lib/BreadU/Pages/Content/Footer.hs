@@ -19,10 +19,12 @@ footerContent :: LangCode -> FooterContent
 footerContent Ru = FooterContent
     { authorName        = "© Денис Шевченко, 2017"
     , emailToAuthor     = "Напишите мне"
-    , tweetLabel        = "Твитнуть"
     }
 footerContent En = FooterContent
     { authorName        = "© 2017 Denis Shevchenko"
     , emailToAuthor     = "Email me"
-    , tweetLabel        = "Tweet"
+    }
+footerContent De = FooterContent
+    { authorName        = "© 2017 Denis Shevchenko"
+    , emailToAuthor     = "Maile mir"
     }

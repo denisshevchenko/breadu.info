@@ -28,3 +28,9 @@ http404Content En = ContentHTTP404
     , error404GoToIndexPage = "Please return to the"
     , error404IndexPageName = "home page"
     }
+http404Content De = ContentHTTP404
+    { error404PageTitle     = "404 Error"
+    , error404Description   = "The page you were looking for doesn't exist."
+    , error404GoToIndexPage = "Please return to the"
+    , error404IndexPageName = "home page"
+    }

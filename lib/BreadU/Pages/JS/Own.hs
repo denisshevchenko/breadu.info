@@ -73,6 +73,7 @@ function submitFoodForm( langCode ) {
 
 $(document).ready( function() {
     submitFoodForm("en"); // Submits food form, with English-localized results.
+    submitFoodForm("de"); // Submits food form, with German-localized results.
     submitFoodForm("ru"); // Submits food form, with Russian-localized results.
 
     // User began type food name. Send AJAX POST-request for autocomplete suggestions.

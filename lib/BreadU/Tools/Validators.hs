@@ -1,5 +1,3 @@
-{-# LANGUAGE MultiWayIf #-}
-
 {-|
 Module      : BreadU.Tools.Validators
 Description : Validators for food values.
