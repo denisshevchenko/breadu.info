@@ -23,6 +23,7 @@ via 'servant-lucid' package.
 
 module BreadU.Pages.Types
     ( LangCode(..)
+    , allLanguages
     , HeaderContent(..)
     , FooterContent(..)
     , IndexBodyContent(..)
@@ -35,7 +36,10 @@ import           TextShow       ( TextShow(..) )
 
 -- | Represents supported languages.
 data LangCode = En | De | Ru
-    deriving (Eq)
+    deriving (Eq, Enum)
+
+allLanguages :: [LangCode]
+allLanguages = [En .. Ru]
 
 -- | This instance allows us to convert values
 -- of 'LangCode' type to the strict 'Text', via 'showt' function.

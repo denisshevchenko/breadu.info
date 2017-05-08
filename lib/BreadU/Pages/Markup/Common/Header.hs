@@ -14,6 +14,7 @@ module BreadU.Pages.Markup.Common.Header
 
 import           BreadU.Pages.Types                 ( HeaderContent(..)
                                                     , LangCode(..)
+                                                    , allLanguages
                                                     )
 import           BreadU.Pages.CSS.Names             ( ClassName(..) )
 import           BreadU.API                         ( indexPageLink )
@@ -21,6 +22,8 @@ import           BreadU.Pages.Markup.Common.Utils
 
 import           Prelude                            hiding ( div, span )
 import           TextShow                           ( showt )
+import           Data.Text                          ( toUpper )
+import           Data.List                          ( delete )
 import           Data.Monoid                        ( (<>) )
 import           Text.Blaze.Html5
 import qualified Text.Blaze.Html5.Attributes        as A
@@ -35,19 +38,21 @@ commonHeader headerContent@HeaderContent{..} langCode = header $ do
     h1 $ toHtml siteName
   where
     -- All supported languages are here.
-    languageSwitcher = div ! A.class_ (toValue LanguageSwitcher) $ do
-        a ! A.href (toValue $ indexPageLink En)
-          ! A.title (toValue switchToRuTitle) $ showCurrent langCode En
+    languageSwitcher =
+        div ! A.class_ "btn-group" $ do
+            button ! A.class_ "btn btn-outline-info btn-sm btn-rounded waves-effect dropdown-toggle"
+                   ! A.type_ "button"
+                   ! dataAttribute "toggle" "dropdown"
+                   ! customAttribute "aria-haspopup" "true"
+                   ! customAttribute "aria-expanded" "false" $ toHtml $ showt langCode
 
-        span ! A.class_ (toValue LanguageSwitcherDelimiter) $ "|"
-        
-        a ! A.href (toValue $ indexPageLink De)
-          ! A.title (toValue switchToRuTitle) $ showCurrent langCode De
-        
-        span ! A.class_ (toValue LanguageSwitcherDelimiter) $ "|"
-        
-        a ! A.href (toValue $ indexPageLink Ru)
-          ! A.title (toValue switchToEnTitle) $ showCurrent langCode Ru
+            div ! A.class_ "dropdown-menu" $
+                mapM_ (\lCode -> a ! A.class_ "dropdown-item"
+                                   ! A.href (toValue $ indexPageLink lCode) $
+                                     toHtml . toUpper . showt $ lCode)
+                      otherLanguages
+    
+    otherLanguages = delete langCode . delete De $ allLanguages
 
     about = div ! A.class_ "text-right" $
         button ! A.type_ "button"
@@ -55,14 +60,6 @@ commonHeader headerContent@HeaderContent{..} langCode = header $ do
                ! A.title (toValue aboutTitle)
                ! dataAttribute "toggle" "modal"
                ! dataAttribute "target" "#aboutModal" $ toHtml aboutLabel
-
--- | Show link to the current language with a special style.
-showCurrent :: LangCode -> LangCode -> Html
-showCurrent currentLanguage langLink
-    | currentLanguage == langLink = span ! A.class_ (toValue CurrentLanguage) $ defaultLink
-    | otherwise                   = defaultLink
-  where
-    defaultLink = toHtml $ showt langLink
 
 -- | Show modal window with info about the service.
 aboutModal :: HeaderContent -> Html

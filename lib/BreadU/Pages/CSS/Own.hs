@@ -48,9 +48,6 @@ ownCss = minify . Lazy.toStrict . render $ do
         paddingTopEm    1.0
         paddingBottomEm 0.7
 
-    cl LanguageSwitcher ?
-        fontSizeEm      1.15
-
     cl LanguageSwitcherDelimiter ? do
         paddingLeftEm   1.0
         paddingRightEm  1.0
@@ -207,6 +204,11 @@ ownCss = minify . Lazy.toStrict . render $ do
     
     ".btn-outline-info:hover, .btn-outline-info:focus, .btn-outline-info:active" ? do
         "border"        -: "2px solid #0587D1 !important"
+
+    ".dropdown-item" ? do
+        paddingTopEm    0.4
+        paddingBottomEm 0.4
+        fontSizeEm      0.8
   where
     centerAlign     = textAlign . alignSide $ sideCenter
     rightAlign      = textAlign . alignSide $ sideRight
