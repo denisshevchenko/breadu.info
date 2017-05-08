@@ -44,6 +44,9 @@ server commonFood =
     :<|> indexPage En
     :<|> addFood En
     :<|> calculateFood En commonFood
+    :<|> indexPage De
+    :<|> addFood De
+    :<|> calculateFood De commonFood
     :<|> autoComplete commonFood
     :<|> serveDirectory "/var/www" -- Our static content will be served by a real web server, I use Nginx.
     :<|> http404

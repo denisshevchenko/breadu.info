@@ -36,13 +36,18 @@ commonHeader headerContent@HeaderContent{..} langCode = header $ do
   where
     -- All supported languages are here.
     languageSwitcher = div ! A.class_ (toValue LanguageSwitcher) $ do
-        a ! A.href (toValue $ indexPageLink Ru)
-          ! A.title (toValue switchToRuTitle) $ showCurrent langCode Ru
+        a ! A.href (toValue $ indexPageLink En)
+          ! A.title (toValue switchToRuTitle) $ showCurrent langCode En
 
         span ! A.class_ (toValue LanguageSwitcherDelimiter) $ "|"
         
-        a ! A.href (toValue $ indexPageLink En)
-          ! A.title (toValue switchToEnTitle) $ showCurrent langCode En
+        a ! A.href (toValue $ indexPageLink De)
+          ! A.title (toValue switchToRuTitle) $ showCurrent langCode De
+        
+        span ! A.class_ (toValue LanguageSwitcherDelimiter) $ "|"
+        
+        a ! A.href (toValue $ indexPageLink Ru)
+          ! A.title (toValue switchToEnTitle) $ showCurrent langCode Ru
 
     about = div ! A.class_ "text-right" $
         button ! A.type_ "button"

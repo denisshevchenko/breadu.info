@@ -43,4 +43,4 @@ commonFooter FooterContent{..} = footer $
     twitter = 
         a ! A.class_ "twitter-share-button"
           ! A.href "https://twitter.com/intent/tweet?hashtags=BreadUCalculator"
-          ! dataAttribute "size" "large" $ toHtml tweetLabel
+          ! dataAttribute "size" "large" $ mempty

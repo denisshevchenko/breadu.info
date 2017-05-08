@@ -34,14 +34,15 @@ import           Data.Text      ( Text )
 import           TextShow       ( TextShow(..) )
 
 -- | Represents supported languages.
-data LangCode = Ru | En
+data LangCode = En | De | Ru
     deriving (Eq)
 
 -- | This instance allows us to convert values
 -- of 'LangCode' type to the strict 'Text', via 'showt' function.
 instance TextShow LangCode where
-    showb Ru = "ru"
     showb En = "en"
+    showb De = "de"
+    showb Ru = "ru"
 
 -- | Content type for <header>-section, including About modal window.
 data HeaderContent = HeaderContent
@@ -70,7 +71,6 @@ data HeaderContent = HeaderContent
 data FooterContent = FooterContent
     { authorName          :: Text -- ^ Author name with copyright.
     , emailToAuthor       :: Text -- ^ Title for mailto-link.
-    , tweetLabel          :: Text -- ^ Label for Tweet button.
     }
 
 -- | Content type for HTTP 404.

@@ -44,8 +44,9 @@ import           Text.Blaze.Html.Renderer.Text          ( renderHtml )
 -}
 instance ToMarkup IndexPage where
     -- Render HTML for fake index page.
-    toMarkup (RedirectTo Ru) = redirectImmediatelyTo $ indexPageLink Ru
     toMarkup (RedirectTo En) = redirectImmediatelyTo $ indexPageLink En
+    toMarkup (RedirectTo De) = redirectImmediatelyTo $ indexPageLink De
+    toMarkup (RedirectTo Ru) = redirectImmediatelyTo $ indexPageLink Ru
     
     -- Render markup for the real, localized index page.
     toMarkup IndexPage{..} = do
