@@ -51,8 +51,6 @@ instance TextShow LangCode where
 -- | Content type for <header>-section, including About modal window.
 data HeaderContent = HeaderContent
     { metaDescription     :: Text -- ^ <meta>-description for a page.
-    , switchToRuTitle     :: Text -- ^ Title for switcher to Ru-language. 
-    , switchToEnTitle     :: Text -- ^ Title for switcher to En-language.
     , aboutLabel          :: Text -- ^ Label for About button.
     , aboutTitle          :: Text -- ^ Title for About button.
     , siteName            :: Text -- ^ Site name.
