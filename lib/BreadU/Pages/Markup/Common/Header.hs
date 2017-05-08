@@ -40,7 +40,8 @@ commonHeader headerContent@HeaderContent{..} langCode = header $ do
     -- All supported languages are here.
     languageSwitcher =
         div ! A.class_ "btn-group" $ do
-            button ! A.class_ "btn btn-outline-info btn-sm btn-rounded waves-effect dropdown-toggle"
+            button ! A.class_ (toValue $ "btn btn-outline-info btn-sm btn-rounded waves-effect dropdown-toggle "
+                                         <> showt LanguageSwitcher)
                    ! A.type_ "button"
                    ! dataAttribute "toggle" "dropdown"
                    ! customAttribute "aria-haspopup" "true"
