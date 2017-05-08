@@ -43,4 +43,4 @@ deployment:
       # Copy update program to a server.
       - scp $(stack path --local-install-root)/bin/update-breadu-server dshevchenko@breadu.info:breadu-root/
       # Run update program on a server.
-      - ssh dshevchenko@breadu.info "/home/dshevchenko/breadu-root/update_breadu_server"
+      - ssh dshevchenko@breadu.info "/home/dshevchenko/breadu-root/update-breadu-server"
