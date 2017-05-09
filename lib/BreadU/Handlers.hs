@@ -48,7 +48,10 @@ import           Data.Monoid                    ( (<>) )
 indexPageCommon :: Maybe ClientLanguage -> Handler IndexPage
 indexPageCommon langHeader = return . RedirectTo $
     case langHeader of
-        Just (ClientLanguage header) -> if showt Ru `isPrefixOf` header then Ru else En
+        Just (ClientLanguage header) ->
+            if | showt Ru `isPrefixOf` header -> Ru
+               | showt De `isPrefixOf` header -> De
+               | otherwise                    -> En
         Nothing -> En
 
 -- | Language-specific index page.
