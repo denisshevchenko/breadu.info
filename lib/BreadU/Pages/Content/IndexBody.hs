@@ -45,13 +45,13 @@ indexBodyContent En = IndexBodyContent
 indexBodyContent De = IndexBodyContent
     { foodNameLabel       = "Lebensmittel"
     , carbsLabel          = "Kohlenhydrate"
-    , buLabel             = "in Brotgerät"
+    , buLabel             = "in BE"
     , gramsLabel          = "in Gramm"
-    , totalBULabel        = "Gesamtzahl BG: "
+    , totalBULabel        = "Gesamtzahl BE: "
     , addFoodLabel        = "Hinzufügen"
-    , addFoodTitle        = "Füge noch ein Lebensmittel hinzu"
+    , addFoodTitle        = "Fügen Sie ein Lebensmittel hinzu"
     , calculateLabel      = "Berechnen"
-    , calculateTitle      = "Berechnen Sie Gramm und BG"
+    , calculateTitle      = "Berechnen Sie Gramm und BE"
     , removeFoodItemTitle = "Löschen Sie dieses Lebensmittel aus der Berechnung"
     , orAnotherValue      = "oder"
     }

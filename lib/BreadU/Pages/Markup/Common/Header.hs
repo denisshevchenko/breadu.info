@@ -53,7 +53,7 @@ commonHeader headerContent@HeaderContent{..} langCode = header $ do
                                      toHtml . toUpper . showt $ lCode)
                       otherLanguages
     
-    otherLanguages = delete langCode . delete De $ allLanguages
+    otherLanguages = delete langCode allLanguages
 
     about = div ! A.class_ "text-right" $
         button ! A.type_ "button"

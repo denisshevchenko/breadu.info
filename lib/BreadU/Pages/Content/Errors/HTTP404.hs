@@ -30,7 +30,7 @@ http404Content En = ContentHTTP404
     }
 http404Content De = ContentHTTP404
     { error404PageTitle     = "404 Fehler"
-    , error404Description   = "Die Seite, die Sie gesucht haben, existiert nicht."
-    , error404GoToIndexPage = "Bitte kehren Sie zur"
-    , error404IndexPageName = "Startseite zurück"
+    , error404Description   = "Die von Ihnen gesuchte Seite existiert nicht."
+    , error404GoToIndexPage = "Bitte gehen Sie zurück zur"
+    , error404IndexPageName = "Homepage"
     }

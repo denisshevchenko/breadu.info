@@ -84,22 +84,20 @@ foodFormBlock langCode content@IndexBodyContent{..} = div ! A.class_ (toValue Fo
         firstFoodItem content
         totalBUQuantity
         row_ $ do
-            div ! A.class_ "col-4 col-xs-5" $ addFoodButton
-            div ! A.class_ "col-8 col-xs-7" $ calculateButton
+            div ! A.class_ "col-3 col-xs-5" $ addFoodButton
+            div ! A.class_ "col-9 col-xs-7" $ calculateButton
   where
     addFoodButton = div ! A.class_ (toValue AddFood) $
-        button ! A.class_ (toValue $ "btn btn-secondary btn-lg btn-block " <> showt AddFoodButton)
+        button ! A.class_ (toValue $ "btn btn-secondary btn-lg btn-block waves-effect " <> showt AddFoodButton)
                ! A.id (toValue AddFoodButtonId)
                ! A.type_ "button"
                ! A.title (toValue addFoodTitle)
                ! A.onclick (toValue addNewFoodItem) $ do
             span ! A.class_ (toValue MainButtonIcon) $ fa "fa-plus"
-            span ! A.class_ (toValue MainButtonIconSeparator) $ mempty
-            toHtml addFoodLabel
 
     -- This button should be submit-button, in this case it can be clicked by Enter key.
     calculateButton = div ! A.class_ (toValue Calculate) $
-        button ! A.class_ (toValue $ "btn btn-info btn-lg btn-block " <> showt CalculateButton)
+        button ! A.class_ (toValue $ "btn btn-info btn-lg btn-block waves-effect " <> showt CalculateButton)
                ! A.id (toValue CalculateButtonId)
                ! A.type_ "submit"
                ! A.title (toValue calculateTitle) $ do
