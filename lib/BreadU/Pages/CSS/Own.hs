@@ -145,6 +145,7 @@ ownCss = minify . Lazy.toStrict . render $ do
         paddingBottomEm 2.5
 
     cl AuthorInfo ? do
+        centerAlign
         paddingTopEm    2.0
         color           "#888"
         fontSizeEm      0.9
@@ -155,9 +156,8 @@ ownCss = minify . Lazy.toStrict . render $ do
     cl MailToIcon ?
         fontSizeEm      1.2
 
-    cl SocialButtons ? do
-        paddingTopEm    2.0
-        rightAlign
+    cl SocialButtons ?
+        paddingTopEm    2.7
 
     cl SocialButtonsSeparator ?
         paddingLeftEm   1.0

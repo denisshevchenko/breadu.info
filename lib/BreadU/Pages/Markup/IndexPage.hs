@@ -61,7 +61,7 @@ instance ToMarkup IndexPage where
                 div ! A.class_ "container" $ do
                     commonHeader headerContentForIndex langCode
                     foodFormBlock langCode bodyContentForIndex
-                    commonFooter footerContentForIndex
+                    commonFooter footerContentForIndex langCode
                 allScripts
 
     -- Render preEscaped-text. It's for raw HTML-tags in the text,
