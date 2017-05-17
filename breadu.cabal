@@ -4,7 +4,7 @@
 
 -- Common info about project.
 name:                breadu
-version:             0.2.1
+version:             0.3.0
 
 synopsis:            Bread Unit calculator
 description:         Bread Unit calculator for diabetics.

@@ -109,7 +109,7 @@ checkIncorrectNumbers =
         badGrams = onlyBad valueOfGramsIsValid gramsIncorrectNumber $ fromMaybe "" maybeGrams
 
         onlyBad :: (Double -> Bool) -> BadInput -> Text -> Maybe BadInput
-        onlyBad predicate badInput rawValue = case double rawValue of
+        onlyBad predicate badInput rawValue = case double (anyDecimalSeparator rawValue) of
             Right (number, remainingTrash) ->
                 if | notEmpty remainingTrash -> Just badInput
                    | not $ predicate number  -> Just badInput
@@ -117,6 +117,8 @@ checkIncorrectNumbers =
             Left _ ->
                 if | notEmpty rawValue -> Just badInput
                    | otherwise         -> Nothing
+
+        anyDecimalSeparator = T.replace "," "."
 
         notEmpty = not . T.null
         

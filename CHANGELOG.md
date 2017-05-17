@@ -1,10 +1,11 @@
 # CHANGELOG
 
-## 0.2.1
+## 0.3.0
 
 * Release date: 18 May 2017.
 * Localized food suggestions.
 * 2-digits after point for BU.
+* Any decimal delimiter for numbers, `,` and `.`.
 
 ## 0.2.0
 
