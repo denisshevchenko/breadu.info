@@ -11,8 +11,7 @@ module BreadU.Pages.Errors
     ( http404
     ) where
 
-import           BreadU.Types                           ( ClientLanguage(..) ) 
-import           BreadU.Pages.Types                     ( LangCode(..) )
+import           BreadU.Types                           ( ClientLanguage(..), LangCode(..) )
 import           BreadU.Pages.Markup.Errors.HTTP404     ( http404Markup )
 import           BreadU.Pages.Content.Errors.HTTP404    ( http404Content )
 

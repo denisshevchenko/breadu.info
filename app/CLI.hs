@@ -16,12 +16,12 @@ import           Options.Applicative.Simple
 import           Data.Monoid                    ( (<>) )
 import           Control.Monad                  ( when )
 import           Control.Monad.Extra            ( unlessM )
-import           System.Directory               ( doesFileExist )
+import           System.Directory               ( doesDirectoryExist )
 import           System.Exit                    ( die )
 
 -- | Type that represents CLI options, we use it just for 'Parser'.
 data Options = Options
-    { commonFood :: FilePath -- ^ Path to .csv-file with common list of food.
+    { commonFood :: FilePath -- ^ Path to directory with .csv-files with common localized lists of food.
     , port       :: Int      -- ^ Port that server will listen.
     }
 
@@ -31,10 +31,10 @@ optionsParser = Options
       <$> strOption (
             long        "food"
          <> short       'f'
-         <> metavar     "PATH_TO_CSV"
+         <> metavar     "PATH_TO_CSV_DIR"
          <> showDefault
-         <> value       "./food/common.csv" -- Option's default value.
-         <> help        "Path to .csv-file with common list of food"
+         <> value       "./food/common" -- Option's default value.
+         <> help        "Path to a directory containing .csv-files with common lists of food"
       )
       <*> option auto (
             long        "port"
@@ -70,7 +70,9 @@ makeSureOptionsAreValid (Options {..}, ()) =
 
     makeSureCSVExists :: IO ()
     makeSureCSVExists =
-        unlessM (doesFileExist commonFood) reportAboutCSVMissing
+        unlessM (doesDirectoryExist commonFood) reportAboutCSVMissing
       where
         reportAboutCSVMissing = die $
-            "No such file '" <> commonFood <> "', you can specify path to .csv-file via '--food' option."
+            "No such directory '"
+            <> commonFood
+            <> "', you can specify path to a directory with .csv-file via '--food' option."

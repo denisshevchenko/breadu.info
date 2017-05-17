@@ -16,14 +16,16 @@ module BreadU.Handlers
     ) where
 
 import           BreadU.Types                   ( CompleteFood
-                                                , FoodNamePart
+                                                , CompleteFoods
                                                 , FoodSuggestions(..)
                                                 , FoodInfoFromForm(..)
+                                                , InputedFoodInfo(..)
                                                 , ClientLanguage(..)
                                                 , NewFood(..)
                                                 , CalculationResult(..)
+                                                , LangCode(..)
                                                 )
-import           BreadU.Pages.Types             ( IndexPage(..), LangCode(..) )
+import           BreadU.Pages.Types             ( IndexPage(..) )
 import           BreadU.Tools.FoodInfoParser    ( prepareFoodInfo )
 import           BreadU.Tools.FoodSuggestions   ( foodSuggestions )
 import           BreadU.Tools.Validators        ( validate )
@@ -37,7 +39,9 @@ import           Servant                        ( Handler )
 import           System.Random                  ( getStdRandom, randomR )
 import           Control.Monad.IO.Class         ( liftIO ) 
 import           TextShow                       ( showt )
-import           Data.Text                      ( isPrefixOf )
+import           Data.Maybe                     ( fromJust )
+import           Data.List                      ( lookup )
+import           Data.Text                      ( isPrefixOf, isInfixOf )
 import           Data.Monoid                    ( (<>) )
 
 {-|
@@ -94,8 +98,14 @@ calculateFood lang (_, food) (FoodInfoFromForm rawFoodInfo)
     results'   = calculate foodInfo food
 
 -- | Handler for AJAX-request during typing food name. We return a few food suggestions.
-autoComplete :: CompleteFood -> FoodNamePart -> Handler FoodSuggestions
-autoComplete (orderedNames, _) foodNamePart = return
-    FoodSuggestions
+autoComplete :: CompleteFoods -> InputedFoodInfo -> Handler FoodSuggestions
+autoComplete commonFoods InputedFoodInfo{..} = do
+    let (orderedNames, _) = fromJust $ lookup langCode commonFoods
+    return FoodSuggestions
         { suggestionsHTML = optionsForDatalist $ foodSuggestions orderedNames foodNamePart
         }
+  where
+    langCode = if | showt Ru `isInfixOf` currentURL -> Ru
+                  | showt De `isInfixOf` currentURL -> De
+                  | showt En `isInfixOf` currentURL -> En
+                  | otherwise                       -> En

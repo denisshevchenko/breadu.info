@@ -12,8 +12,7 @@ module BreadU.Server
     ( server
     ) where
 
-import           BreadU.Types                       ( CompleteFood )
-import           BreadU.Pages.Types                 ( LangCode(..) )
+import           BreadU.Types                       ( CompleteFoods, LangCode(..) )
 import           BreadU.API                         ( API )
 
 -- | Pages 'ToMarkup' instances, we need it to render complete HTML pages.
@@ -32,21 +31,26 @@ import           Servant                            ( Server
                                                     , (:<|>)(..)
                                                     , serveDirectory
                                                     )
+import           Data.Maybe                         ( fromJust )
+import           Data.List                          ( lookup )
 
 -- | Defines the server for serving an API.
 -- Please note that an order of handlers must be exactly the same as in API type!
-server :: CompleteFood -> Server API
-server commonFood =
+server :: CompleteFoods -> Server API
+server commonFoods =
          indexPageCommon
     :<|> indexPage Ru
     :<|> addFood Ru
-    :<|> calculateFood Ru commonFood
+    :<|> calculateFood Ru (foodFor Ru)
     :<|> indexPage En
     :<|> addFood En
-    :<|> calculateFood En commonFood
+    :<|> calculateFood En (foodFor En)
     :<|> indexPage De
     :<|> addFood De
-    :<|> calculateFood De commonFood
-    :<|> autoComplete commonFood
+    :<|> calculateFood De (foodFor De)
+    :<|> autoComplete commonFoods
     :<|> serveDirectory "/var/www" -- Our static content will be served by a real web server, I use Nginx.
     :<|> http404
+  where
+    -- We definitely know that food is here.
+    foodFor lang = fromJust $ lookup lang commonFoods

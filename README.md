@@ -16,7 +16,7 @@ If you have any questions, critique or suggestions for this project - please [em
 
 ### Common Food
 
-Calculator works with a common list of food obtained from the `food/common.csv` file. Carbohydrate values are taken from the public medical resources and from products' labels.
+Calculator works with a common list of food obtained from the `food/common/*.csv` files. Carbohydrate values are taken from the public medical resources and from products' labels.
 
 ## Real-Life Haskell
 
@@ -72,7 +72,7 @@ Please feel free to [open an issue](https://github.com/denisshevchenko/breadu.in
 ### Misc
 
 * `static/` - static web files (actually just images).
-* `food/common.csv` - .csv-file with common food (default set of food every user will see).
+* `food/common/` - .csv-files with common food (default sets of food every user will see), localized versions.
 
 ## Local build
 

@@ -23,14 +23,15 @@ module BreadU.API
     , staticImages
     ) where
 
-import           BreadU.Pages.Types     ( LangCode(..), IndexPage(..) )
 import           BreadU.Types           ( ClientLanguage(..)
                                         , FoodInfoFromForm(..)
                                         , NewFood(..)
                                         , CalculationResult(..)
-                                        , FoodNamePart
                                         , FoodSuggestions(..)
+                                        , LangCode(..)
+                                        , InputedFoodInfo(..)
                                         )
+import           BreadU.Pages.Types     ( IndexPage(..) )
 
 import           Servant
 import           Servant.HTML.Blaze     ( HTML )
@@ -69,7 +70,7 @@ type CalculateFoodEndpoint =
 -- | Endpoint for AJAX-request, for autocomplete during food name typing.
 -- POST-request with plain text (food part), JSON-response.
 type AutoCompleteEndpoint =
-    "autocomplete" :> ReqBody '[PlainText] FoodNamePart
+    "autocomplete" :> ReqBody '[JSON] InputedFoodInfo
                    :> Post '[JSON] FoodSuggestions
 
 -- | Endpoint to serve static content (see 'static' directory in the root of repository).

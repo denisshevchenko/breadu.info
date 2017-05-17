@@ -12,15 +12,34 @@ descriptive types, readers of your code will thank you.
 
 module BreadU.Types where
 
-import           Data.Text              ( Text )
+import           TextShow               ( TextShow(..) )
+import           Data.Text              ( Text, unpack )
 import           Data.HashMap.Strict    ( HashMap )
 import           Data.Vector            ( Vector )
-import           Data.Aeson             ( ToJSON(..) )
+import           Data.Aeson             ( ToJSON(..), FromJSON(..) )
 import           Web.HttpApiData        ( FromHttpApiData(..) )
 import           Web.FormUrlEncoded     ( FromForm(..), toEntriesByKey )
 import           GHC.Generics           ( Generic(..) )
 
 type Port = Int
+
+-- | Represents supported languages.
+data LangCode = En | De | Ru
+    deriving (Eq, Enum)
+
+allLanguages :: [LangCode]
+allLanguages = [En .. Ru]
+
+-- | This instance allows us to convert values
+-- of 'LangCode' type to the strict 'Text', via 'showt' function.
+instance TextShow LangCode where
+    showb En = "en"
+    showb De = "de"
+    showb Ru = "ru"
+
+-- | For work with FilePath.
+instance Show LangCode where
+    show = unpack . showt
 
 -- | Types for convenient representation of the food info.
 type FoodName         = Text
@@ -29,6 +48,7 @@ type CarbPer100g      = Double
 type Food             = HashMap FoodName CarbPer100g
 type OrderedFoodNames = Vector FoodName
 type CompleteFood     = (OrderedFoodNames, Food)
+type CompleteFoods    = [(LangCode, CompleteFood)]
 
 -- | Amount of food.
 type BU    = Double
@@ -117,3 +137,13 @@ newtype FoodSuggestions = FoodSuggestions
  
 -- | For converting 'FoodSuggestions' into JSON, in AJAX POST-response.
 instance ToJSON FoodSuggestions
+
+-- | When the user types food name, information about it POST-ed as a value
+-- of this type. 'currentURL' will be used to detect user's current language.
+data InputedFoodInfo = InputedFoodInfo
+    { foodNamePart :: FoodNamePart
+    , currentURL   :: Text
+    } deriving (Generic)
+
+-- | For converting 'InputedFoodInfo' from JSON, during AJAX POST-request.
+instance FromJSON InputedFoodInfo

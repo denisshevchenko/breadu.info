@@ -10,8 +10,7 @@ near corresponding form's inputs if some values are incorrect.
 
 module BreadU.Pages.Content.Errors.Messages where
 
-import           BreadU.Types           ( CarbPer100g )
-import           BreadU.Pages.Types     ( LangCode(..) )
+import           BreadU.Types           ( CarbPer100g, LangCode(..) )
 
 import           TextShow               ( showt )
 import           Data.Monoid            ( (<>) )

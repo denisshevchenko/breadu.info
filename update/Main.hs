@@ -74,7 +74,7 @@ main = run $ do
     -- Main constants.
     executableName      = "breadu-exe"                       
     rootDirectory       = "/home/dshevchenko/breadu-root"
-    pathToCommonFood    = rootDirectory </> "food/common.csv" 
+    pathToCommonFood    = rootDirectory </> "food/common"
     pathToExecutable    = rootDirectory </> executableName
     pathToTmpExecutable = "/tmp" </> executableName
     pathToNginxConfig   = "/etc/nginx/sites-enabled/default"

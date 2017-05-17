@@ -14,9 +14,9 @@ module BreadU.Pages.JS.SocialButtons
     , facebookSDK
     ) where
 
-import           BreadU.Pages.Types     ( LangCode(..) )
+import           BreadU.Types       ( LangCode(..) )
 
-import           Data.Text              ( Text )
+import           Data.Text          ( Text )
 import           Data.String.QQ
 
 -- | Official Twitter widget, it's using for the Tweet button. 

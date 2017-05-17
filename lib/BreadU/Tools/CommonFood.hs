@@ -6,8 +6,8 @@ Portability : POSIX
 
 Work with common food (default set of food every user will see).
 
-Common food is obtaining from the 'food/common.csv' file.
-It's simple .csv-file with header, format is:
+Common food is obtaining from the 'food/common/*.csv' files.
+It's simple .csv-files with headers, format is:
 
 @
      Food,CarbPer100g
@@ -20,10 +20,19 @@ module BreadU.Tools.CommonFood
     ( loadCommonFood
     ) where
 
-import           BreadU.Types                   ( FoodName, CarbPer100g, CompleteFood )
+import           BreadU.Types                   ( FoodName
+                                                , CarbPer100g
+                                                , CompleteFood
+                                                , CompleteFoods
+                                                , LangCode(..)
+                                                , allLanguages
+                                                )
 import           BreadU.Tools.Validators        ( valueOfCarbsIsValid, minCarbs, maxCarbs )
 
-import           Data.List                      ( nub, sort )
+import           Data.Char                      ( toUpper ) 
+import qualified Data.Text                      as T 
+import           Data.Maybe                     ( isNothing, fromJust )
+import           Data.List                      ( nub, sort, find )
 import           Data.Csv                       ( HasHeader (..), decode )
 import           Data.Monoid                    ( (<>) )
 import qualified Data.ByteString.Lazy           as Lazy
@@ -31,19 +40,39 @@ import           Data.Vector                    ( Vector )
 import qualified Data.Vector                    as V
 import qualified Data.HashMap.Strict            as HM
 import           Control.Exception              ( SomeException, catch )
-import           Control.Monad                  ( when, unless, mapM_ )
+import           Control.Monad                  ( when, unless, mapM_, forM )
+import           System.FilePath.Posix          ( dropExtension, (</>) )
+import           System.Directory               ( listDirectory )
 import           System.Exit                    ( die )
 
--- | Loads common food from .csv-file and checks it valid.
-loadCommonFood :: FilePath -> IO CompleteFood
-loadCommonFood pathToCSV = do
+-- |
+loadCommonFood :: FilePath -> IO CompleteFoods
+loadCommonFood pathToCSVDir = listDirectory pathToCSVDir >>= \allFiles -> do
+    csvs <- makeSureWeHaveCSVForAllLanguages allFiles
+    forM csvs $ \(language, csv) -> do
+        foodForThisLanguage <- loadCommonFoodFromOneFile (pathToCSVDir </> csv)
+        return (language, foodForThisLanguage)
+
+-- | We have to check if .csv-files for all supported languages are here.
+makeSureWeHaveCSVForAllLanguages :: [FilePath] -> IO [(LangCode, FilePath)]
+makeSureWeHaveCSVForAllLanguages allFiles = forM allLanguages $ \language -> do
+    let csv = find (\file -> dropExtension file == show language) allFiles
+    when (isNothing csv) $ reportAboutMissingCSV language
+    return (language, fromJust csv)
+  where
+    reportAboutMissingCSV lang = die $ "I cannot find .csv-file for language '" <> show lang <> "'."
+
+-- | Loads common food from a single .csv-file and checks it valid.
+loadCommonFoodFromOneFile :: FilePath -> IO CompleteFood
+loadCommonFoodFromOneFile pathToCSV = do
     commonFood <- Lazy.readFile pathToCSV `catch` possibleProblems
     case extractFood commonFood of
         Left problem -> reportAboutInvalidCSV problem
         Right v -> do
-            let pairs = V.toList v
-            makeSureFoodIsValid pairs
-            let foodMap = HM.fromList pairs
+            let pairs  = V.toList v
+                pairs' = capitalize pairs
+            makeSureFoodIsValid pairs'
+            let foodMap = HM.fromList pairs'
             return (V.fromList . sort . HM.keys $ foodMap, foodMap)
   where
     -- Cannot read the file, for example, because of wrong permissions.
@@ -58,10 +87,21 @@ loadCommonFood pathToCSV = do
     reportAboutInvalidCSV problem =
         die $ "Something wrong with '" <> pathToCSV <> "' file: " <> show problem <> "."
 
+    -- Assumed that all food names in .csv-files are in lower case. So we have to
+    -- capitalize all these names because of usability: it's more convenient to 
+    -- type a name in lowercase on desktop, but mobile keyboard suggests to start 
+    -- with uppercase-letter by default. So we must have not only 'orange', but 'Orange' too.
+    capitalize :: [(FoodName, CarbPer100g)] -> [(FoodName, CarbPer100g)]
+    capitalize lowerCasePairs = concat [[(capitalized name, carbs), (name, carbs)]
+                                       | (name, carbs) <- lowerCasePairs
+                                       ]
+      where
+        capitalized name = (toUpper . T.head $ name) `T.cons` T.tail name
+
 -- | Food entities must be unique and carb values must be between 0.0 and 100.0.
 makeSureFoodIsValid :: [(FoodName, CarbPer100g)] -> IO ()
 makeSureFoodIsValid food =
-    -- Monadic >> operator, there's no passing values from one function to other.
+    -- Monadic operator '>>', there's no passing values from one function to other.
     makeSureItIsNonEmpty >> makeSureNoDuplication >> checkCarbValues
   where
     makeSureItIsNonEmpty :: IO ()

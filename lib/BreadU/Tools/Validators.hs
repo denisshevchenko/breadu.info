@@ -20,8 +20,8 @@ import           BreadU.Types                           ( CarbPer100g
                                                         , Food
                                                         , FoodInfo(..)
                                                         , FoodItem(..)
+                                                        , LangCode(..)
                                                         )
-import           BreadU.Pages.Types                     ( LangCode(..) )
 import qualified BreadU.Pages.Content.Errors.Messages   as M
 
 import           Control.Monad.Trans.State.Strict       ( State, execState, modify )

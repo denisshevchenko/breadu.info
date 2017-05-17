@@ -11,18 +11,19 @@ module BreadU.Tools.FoodSuggestions
     ( foodSuggestions
     ) where
 
-import           BreadU.Types                   ( FoodName
-                                                , FoodNamePart
-                                                , OrderedFoodNames
-                                                )
+import           BreadU.Types       ( FoodName
+                                    , FoodNamePart
+                                    , OrderedFoodNames
+                                    )
 
-import           Data.Vector                    ( findIndex, (!), (!?) )
-import           Data.Text                      ( isPrefixOf )
-import           Data.Maybe                     ( maybe )
+import           Data.Vector        ( findIndex, (!), (!?) )
+import           Data.Text          ( isPrefixOf )
+import qualified Data.Text          as T
+import           Data.Maybe         ( maybe )
 
 -- | Suggestions for autocomplete of the food name. Can be empty.
 foodSuggestions :: OrderedFoodNames -> FoodNamePart -> [FoodName]
-foodSuggestions orderedNames foodNamePart = suggestions
+foodSuggestions orderedNames foodNamePart = if T.null foodNamePart then [] else suggestions
   where
     suggestions = maybe [] findEnoughSuggestionsIfExist indexOfMatched
     indexOfMatched = findIndex foodBeginsWithPart orderedNames

@@ -12,7 +12,7 @@ module BreadU
     ( startBreadU
     ) where
 
-import           BreadU.Types               ( CompleteFood, Port )
+import           BreadU.Types               ( CompleteFoods, Port )
 import           BreadU.Tools.CommonFood    ( loadCommonFood )
 import           BreadU.API                 ( api )
 import           BreadU.Server              ( server )
@@ -21,9 +21,9 @@ import           Servant                    ( serve )
 import           Network.Wai                ( Application )
 import           Network.Wai.Handler.Warp   ( run )
 
--- | Runs a server on specified port. After start we read common food from the .csv-file.
+-- | Runs a server on specified port. After start we read common food from the .csv-files.
 startBreadU :: (FilePath, Port) -> IO ()
-startBreadU (pathToCSV, port) = loadCommonFood pathToCSV >>= run port . app
+startBreadU (pathToCSVDir, port) = loadCommonFood pathToCSVDir >>= run port . app
   where
-    app :: CompleteFood -> Application
+    app :: CompleteFoods -> Application
     app = serve api . server

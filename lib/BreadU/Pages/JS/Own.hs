@@ -79,18 +79,30 @@ $(document).ready( function() {
     // User began type food name. Send AJAX POST-request for autocomplete suggestions.
     $('body').on('keyup', 'input.FoodInputClass', function() {
         var idOfThisInput = "#" + this.id;
+        var datalistForThisInput = idOfThisInput + "datalist";
+        var valueOfInput = $( this ).val();
+        
+        // If the input's value is empty - just skip it.
+        if ( !valueOfInput ) {
+            $( datalistForThisInput ).find('option').remove().end(); // Remove all previous suggestions.
+            return;
+        }
+
+        var inputedFoodInfo = {
+            foodNamePart : valueOfInput,
+            currentURL   : $( location ).attr('href')
+        };
+
         $.post({
             url: "autocomplete",
-            data: $( this ).val(),
+            data: JSON.stringify( inputedFoodInfo ),
             success: function( result ) {
-                var obj = JSON.parse( result );
                 // Find id of corresponding food input.
-                var datalistForThisInput = idOfThisInput + "datalist";
                 $( datalistForThisInput ).find('option').remove().end(); // Remove all previous suggestions.
-                $( datalistForThisInput ).append( obj.suggestionsHTML ); // Add current suggestions.
+                $( datalistForThisInput ).append( result.suggestionsHTML ); // Add current suggestions.
             }, 
-            dataType: "text",
-            contentType: "text/plain; charset=UTF-8"
+            dataType: "json",
+            contentType: "application/json; charset=UTF-8"
         });
     });
 });

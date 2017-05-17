@@ -9,11 +9,10 @@ HTML markup for the index page.
 
 module BreadU.Pages.Markup.IndexPage where
 
-import           BreadU.Types                           ( FoodName )
+import           BreadU.Types                           ( FoodName, LangCode(..) )
 import           BreadU.Pages.Types                     ( IndexPage(..)
                                                         , IndexBodyContent(..)
                                                         , HeaderContent(..)
-                                                        , LangCode(..)
                                                         )
 import           BreadU.Pages.CSS.Names                 ( ClassName(..) )
 import           BreadU.Pages.JS.Own                    ( removeDOMItemBy, ajaxPOST )

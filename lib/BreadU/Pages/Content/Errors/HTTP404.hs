@@ -12,7 +12,8 @@ module BreadU.Pages.Content.Errors.HTTP404
     ( http404Content
     ) where
 
-import           BreadU.Pages.Types     ( LangCode(..), ContentHTTP404(..) )
+import           BreadU.Types           ( LangCode(..) )
+import           BreadU.Pages.Types     ( ContentHTTP404(..) )
 
 -- | Localized content for 404 page.
 http404Content :: LangCode -> ContentHTTP404

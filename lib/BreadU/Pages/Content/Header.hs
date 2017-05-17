@@ -12,7 +12,8 @@ module BreadU.Pages.Content.Header
     ( headerContent
     ) where
 
-import           BreadU.Pages.Types     ( LangCode(..), HeaderContent(..) )
+import           BreadU.Types           ( LangCode(..) )
+import           BreadU.Pages.Types     ( HeaderContent(..) )
 
 -- | Localized content for page's header .
 headerContent :: LangCode -> HeaderContent

@@ -21,32 +21,11 @@ Note that we're using 'blaze-html' rendering in this project, but Servant suppor
 via 'servant-lucid' package.
 -}
 
-module BreadU.Pages.Types
-    ( LangCode(..)
-    , allLanguages
-    , HeaderContent(..)
-    , FooterContent(..)
-    , IndexBodyContent(..)
-    , ContentHTTP404(..)
-    , IndexPage(..)
-    ) where
+module BreadU.Pages.Types where
+
+import           BreadU.Types   ( LangCode(..) )
 
 import           Data.Text      ( Text )
-import           TextShow       ( TextShow(..) )
-
--- | Represents supported languages.
-data LangCode = En | De | Ru
-    deriving (Eq, Enum)
-
-allLanguages :: [LangCode]
-allLanguages = [En .. Ru]
-
--- | This instance allows us to convert values
--- of 'LangCode' type to the strict 'Text', via 'showt' function.
-instance TextShow LangCode where
-    showb En = "en"
-    showb De = "de"
-    showb Ru = "ru"
 
 -- | Content type for <header>-section, including About modal window.
 data HeaderContent = HeaderContent

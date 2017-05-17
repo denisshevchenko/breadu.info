@@ -12,7 +12,8 @@ module BreadU.Pages.Content.Footer
     ( footerContent
     ) where
 
-import           BreadU.Pages.Types     ( LangCode(..), FooterContent(..) )
+import           BreadU.Types           ( LangCode(..) )
+import           BreadU.Pages.Types     ( FooterContent(..) )
 
 -- | Localized content for page's footer .
 footerContent :: LangCode -> FooterContent

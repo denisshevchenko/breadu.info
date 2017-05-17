@@ -12,10 +12,8 @@ module BreadU.Pages.Markup.Common.Header
     ( commonHeader
     ) where
 
-import           BreadU.Pages.Types                 ( HeaderContent(..)
-                                                    , LangCode(..)
-                                                    , allLanguages
-                                                    )
+import           BreadU.Types                       ( LangCode(..), allLanguages )
+import           BreadU.Pages.Types                 ( HeaderContent(..) )
 import           BreadU.Pages.CSS.Names             ( ClassName(..) )
 import           BreadU.API                         ( indexPageLink )
 import           BreadU.Pages.Markup.Common.Utils

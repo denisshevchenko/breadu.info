@@ -12,7 +12,8 @@ module BreadU.Pages.Markup.Common.Footer
     ( commonFooter
     ) where
 
-import           BreadU.Pages.Types                 ( FooterContent(..), LangCode(..) )
+import           BreadU.Types                       ( LangCode(..) )
+import           BreadU.Pages.Types                 ( FooterContent(..) )
 import           BreadU.Pages.CSS.Names             ( ClassName(..) )
 import           BreadU.Pages.Markup.Common.Utils
 import           BreadU.Pages.JS.SocialButtons      ( facebookSDK )

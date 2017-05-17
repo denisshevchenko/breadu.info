@@ -12,7 +12,8 @@ module BreadU.Pages.Content.IndexBody
     ( indexBodyContent
     ) where
 
-import           BreadU.Pages.Types     ( LangCode(..), IndexBodyContent(..) )
+import           BreadU.Types           ( LangCode(..) )
+import           BreadU.Pages.Types     ( IndexBodyContent(..) )
 
 -- | Localized content for index page's body.
 indexBodyContent :: LangCode -> IndexBodyContent
