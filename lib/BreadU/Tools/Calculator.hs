@@ -39,7 +39,7 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU
     -- Take all BU values, sum them as numbers and convert again
     -- to the 'Text' with the same rounding.
     totalBUValue :: Result
-    totalBUValue = (showt TotalBUQuantityId, roundAsText buSum)
+    totalBUValue = (showt TotalBUQuantityId, toFixed 2 buSum)
       where
         buSum = sum [asDouble buValue | (_, buValue) <- filter buOnly buAndGramsResults]
         buOnly (inputId, _) = showt BUInputPostfix `isSuffixOf` inputId
@@ -60,26 +60,22 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU
                              else let Right (number, _) = double . fromJust $ maybeCarbs
                                   in number
 
-        carbsValue = if foodNameIsHere then Just (carbInputId, roundAsText carbohydrates) else Nothing
+        carbsValue = if foodNameIsHere then Just (carbInputId, toFixed 1 carbohydrates) else Nothing
 
         buAndGramsValues = doCalculate maybeBU maybeGrams carbohydrates
 
         -- Convert grams to BU and vice versa. BU value is always here
         -- because of calculationg of the total BU value.
         doCalculate :: Maybe Text -> Maybe Text -> CarbPer100g -> [Maybe Result]
-        doCalculate Nothing    (Just grams') carbs = [Just (buInputId, roundAsText $ convertGramsToBU carbs (asDouble grams'))]
+        doCalculate Nothing    (Just grams') carbs = [Just (buInputId, toFixed 2 $ convertGramsToBU carbs (asDouble grams'))]
         doCalculate (Just bu') Nothing       carbs = [ Just (buInputId, bu')
-                                                     , Just (gramsInputId, roundAsText $ convertBUToGrams carbs (asDouble bu'))
+                                                     , Just (gramsInputId, toFixed 1 $ convertBUToGrams carbs (asDouble bu'))
                                                      ]
         doCalculate (Just bu') (Just _)      _     = [Just (buInputId, bu')]
         doCalculate Nothing    Nothing       _     = [Nothing]
 
 asDouble :: Text -> Double
 asDouble rawNumber = let Right (number, _) = double rawNumber in number
-
--- | Round number with fixed precision (1 digit after point) and convert it to 'Text'.
-roundAsText :: Double -> Text
-roundAsText = toFixed 1
 
 -- | Converter from BU to grams, based on carbohydrates value.
 convertBUToGrams :: CarbPer100g -> BU -> Grams

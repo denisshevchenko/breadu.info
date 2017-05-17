@@ -4,6 +4,7 @@
 
 * Release date: 18 May 2017.
 * Localized food suggestions.
+* 2-digits after point for BU.
 
 ## 0.2.0
 
