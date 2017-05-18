@@ -53,6 +53,8 @@ data ClassName
     | MailToIcon
     | SocialButtons
     | SocialButtonsSeparator
+    | BlueCircleArea
+    | BlueCircle
     | Block404
     | Block404Mark
     | Block404Mark0

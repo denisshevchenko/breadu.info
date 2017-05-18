@@ -20,12 +20,15 @@ footerContent :: LangCode -> FooterContent
 footerContent Ru = FooterContent
     { authorName        = "© Денис Шевченко, 2017"
     , emailToAuthor     = "Напишите мне"
+    , blueCircleTitle   = "Да, у диабета есть эмблема! Узнайте больше..."
     }
 footerContent En = FooterContent
     { authorName        = "© 2017 Denis Shevchenko"
     , emailToAuthor     = "Email me"
+    , blueCircleTitle   = "Yes, diabetes has a logo! Learn more..."
     }
 footerContent De = FooterContent
     { authorName        = "© 2017 Denis Shevchenko"
     , emailToAuthor     = "Maile mir"
+    , blueCircleTitle   = "Ja, Diabetes hat ein Logo! Mehr wissen..."
     }

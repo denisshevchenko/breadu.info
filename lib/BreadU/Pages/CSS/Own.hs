@@ -162,6 +162,13 @@ ownCss = minify . Lazy.toStrict . render $ do
     cl SocialButtonsSeparator ?
         paddingLeftEm   1.0
 
+    cl BlueCircleArea ? do
+        centerAlign
+        paddingTopEm    1.5
+
+    cl BlueCircle ?
+        widthEm         3.2
+
     cl Block404 ? do
         paddingTopEm    5.0
         centerAlign
@@ -223,6 +230,8 @@ ownCss = minify . Lazy.toStrict . render $ do
     marginAuto      = margin (em 0) auto (em 0) auto
 
     fontSizeEm      = fontSize . em
+
+    widthEm         = width . em
 
     borderRadiusAll r = borderRadius r r r r
     

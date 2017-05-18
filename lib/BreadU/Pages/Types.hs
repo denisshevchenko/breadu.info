@@ -52,6 +52,7 @@ data HeaderContent = HeaderContent
 data FooterContent = FooterContent
     { authorName          :: Text -- ^ Author name with copyright.
     , emailToAuthor       :: Text -- ^ Title for mailto-link.
+    , blueCircleTitle     :: Text -- ^ Title for Blue Circle logo.
     }
 
 -- | Content type for HTTP 404.
