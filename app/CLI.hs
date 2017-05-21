@@ -1,3 +1,5 @@
+{-# LANGUAGE ApplicativeDo #-}
+
 {-|
 Module      : CLI
 Description : CLI options
@@ -27,23 +29,23 @@ data Options = Options
 
 -- | Parser parses actual CLI-arguments into a value of 'Option' type.
 optionsParser :: Parser Options
-optionsParser = Options
-      <$> strOption (
+optionsParser = do
+      commonFood <- strOption $
             long        "food"
          <> short       'f'
          <> metavar     "PATH_TO_CSV_DIR"
          <> showDefault
          <> value       "./food/common" -- Option's default value.
          <> help        "Path to a directory containing .csv-files with common lists of food"
-      )
-      <*> option auto (
+      port <- option auto $
             long        "port"
          <> short       'p'
          <> metavar     "PORT"
          <> showDefault
          <> value       3000                -- Option's default value.
          <> help        "Port that server will listen"
-      )
+      -- 'commonFood' and 'port' fields are already here, so thanks to 'RecordWildCards'. ;-)
+      return Options{..}
 
 {-|
    Just checks if options are valid, exit with error otherwise.
