@@ -110,6 +110,7 @@ library
   default-extensions:  RecordWildCards
                        OverloadedStrings
                        MultiWayIf
+                       ViewPatterns
 
 -- Section for 'breadu-exe' program
 -- This program is very simple, it just uses 'breadu' library.

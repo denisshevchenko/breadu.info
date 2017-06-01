@@ -68,11 +68,9 @@ loadCommonFoodFromOneFile pathToCSV = do
     commonFood <- Lazy.readFile pathToCSV `catch` possibleProblems
     case extractFood commonFood of
         Left problem -> reportAboutInvalidCSV problem
-        Right v -> do
-            let pairs  = V.toList v
-                pairs' = capitalize pairs
-            makeSureFoodIsValid pairs'
-            let foodMap = HM.fromList pairs'
+        Right (capitalize . V.toList -> pairs) -> do
+            makeSureFoodIsValid pairs
+            let foodMap = HM.fromList pairs
             return (V.fromList . sort . HM.keys $ foodMap, foodMap)
   where
     -- Cannot read the file, for example, because of wrong permissions.
@@ -92,7 +90,7 @@ loadCommonFoodFromOneFile pathToCSV = do
     -- type a name in lowercase on desktop, but mobile keyboard suggests to start 
     -- with uppercase-letter by default. So we must have not only 'orange', but 'Orange' too.
     capitalize :: [(FoodName, CarbPer100g)] -> [(FoodName, CarbPer100g)]
-    capitalize lowerCasePairs = concat [[(capitalized name, carbs), (name, carbs)]
+    capitalize lowerCasePairs = concat [ [(capitalized name, carbs), (name, carbs)]
                                        | (name, carbs) <- lowerCasePairs
                                        ]
       where
@@ -102,7 +100,9 @@ loadCommonFoodFromOneFile pathToCSV = do
 makeSureFoodIsValid :: [(FoodName, CarbPer100g)] -> IO ()
 makeSureFoodIsValid food =
     -- Monadic operator '>>', there's no passing values from one function to other.
-    makeSureItIsNonEmpty >> makeSureNoDuplication >> checkCarbValues
+       makeSureItIsNonEmpty
+    >> makeSureNoDuplication
+    >> checkCarbValues
   where
     makeSureItIsNonEmpty :: IO ()
     makeSureItIsNonEmpty = when (null food) reportAboutEmptyCSV

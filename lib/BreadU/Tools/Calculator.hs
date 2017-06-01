@@ -75,7 +75,8 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU
         doCalculate Nothing    Nothing       _     = [Nothing]
 
 asDouble :: Text -> Double
-asDouble rawNumber = let Right (number, _) = double rawNumber in number
+asDouble (double -> Right (number, _)) = number
+asDouble (double -> _)                 = error "Impossible: text value already validated as a number, fix your code!"
 
 -- | Converter from BU to grams, based on carbohydrates value.
 convertBUToGrams :: CarbPer100g -> BU -> Grams
