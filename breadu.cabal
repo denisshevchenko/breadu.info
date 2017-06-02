@@ -74,7 +74,7 @@ library
   -- You can check packages' versions at https://www.stackage.org/VALUE_OF_RESOLVER.
   -- Good practice - keep this list in alphabetical order.
   build-depends:       aeson
-                     , base
+                     , base                 < 5.0
                      , blaze-html
                      , blaze-markup
                      , bytestring
