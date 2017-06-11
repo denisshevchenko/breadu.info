@@ -96,7 +96,7 @@ ownCss = minify . Lazy.toStrict . render $ do
 
     cl Or ? do
         centerAlign
-        paddingTopEm    0.90
+        paddingTopEm    0.75
         fontSizeEm      1.0
     
     cl TotalBUQuantity ? do

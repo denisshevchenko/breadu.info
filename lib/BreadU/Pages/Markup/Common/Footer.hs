@@ -12,7 +12,6 @@ module BreadU.Pages.Markup.Common.Footer
     ( commonFooter
     ) where
 
-import           BreadU.API                         ( staticImages )
 import           BreadU.Types                       ( LangCode(..) )
 import           BreadU.Pages.Types                 ( FooterContent(..) )
 import           BreadU.Pages.CSS.Names             ( ClassName(..) )
@@ -30,7 +29,6 @@ commonFooter :: FooterContent -> LangCode -> Html
 commonFooter FooterContent{..} langCode = footer $ do
     authorInfo
     socialButtons
-    blueCircle
   where
     authorInfo = div ! A.class_ (toValue AuthorInfo) $ do
         span $ toHtml authorName
@@ -65,10 +63,3 @@ commonFooter FooterContent{..} langCode = footer $ do
         a ! A.class_ "twitter-share-button"
           ! A.href "https://twitter.com/intent/tweet?hashtags=BreadUCalculator"
           ! dataAttribute "size" "large" $ mempty
-    
-    -- | Blue Circle is an international logo of the diabetes.
-    blueCircle = div ! A.class_ (toValue BlueCircleArea) $
-        a ! A.href "https://www.idf.org/our-network/blue-circle-voices.html"
-          ! A.title (toValue blueCircleTitle) $
-            img ! A.class_ (toValue BlueCircle)
-                ! A.src (toValue $ staticImages <> "blue-circle.svg")
