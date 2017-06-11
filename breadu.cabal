@@ -26,7 +26,7 @@ cabal-version:       >=1.10
 -- an essence of the project.
 library
   -- This is where library modules live.
-  hs-source-dirs:      lib
+  hs-source-dirs:      src/lib
   -- This is an "opened" modules of a library.
   -- It means we can import these (and only these)
   -- modules in other libraries/programs.
@@ -103,7 +103,7 @@ library
                      , warp
   -- These options will be passed to GHC compiler during build of library.
   -- Good advice: use -Werror, it'll help you.
-  ghc-options:         -Wall -Werror -O2 -Wno-orphans
+  ghc-options:         -Wall -Werror -O -Wno-orphans
   -- Haskell 2010 Standard.
   default-language:    Haskell2010
   -- GHC extensions that will be active in all modules by default.
@@ -116,7 +116,7 @@ library
 -- This program is very simple, it just uses 'breadu' library.
 executable breadu-exe
   -- This is where program's modules live.
-  hs-source-dirs:      app
+  hs-source-dirs:      src/app
   -- This is module where 'main' function is defined.
   main-is:             Main.hs
   other-modules:       CLI
@@ -127,7 +127,7 @@ executable breadu-exe
                      , extra
                      , optparse-simple
   -- These options will be passed to GHC compiler during build of program.
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O2
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O
   -- Haskell 2010 Standard.
   default-language:    Haskell2010
   -- GHC extensions that will be active in all modules by default.
@@ -138,7 +138,7 @@ executable breadu-exe
 -- We're using this program to update breadu-server on production server.
 executable update-breadu-server
   -- This is where program's modules live.
-  hs-source-dirs:      update
+  hs-source-dirs:      src/update
   -- This is module where 'main' function is defined.
   main-is:             Main.hs
   -- Dependencies for a program. Main dependency is 'breadu' library.
@@ -146,7 +146,7 @@ executable update-breadu-server
                      , filepath
                      , shell-conduit
   -- These options will be passed to GHC compiler during build of program.
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O2
+  ghc-options:         -Wall -Werror
   -- Haskell 2010 Standard.
   default-language:    Haskell2010
 
