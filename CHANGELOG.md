@@ -5,6 +5,7 @@
 * Release date: 12 June 2017.
 * Remove Google Font.
 * Little design changes.
+* Fix bug with comma decimal separator.
 
 ## 0.3.0
 

@@ -26,7 +26,7 @@ import qualified Data.HashMap.Strict            as HM
 import           TextShow                       ( showt )
 import           Data.Double.Conversion.Text    ( toFixed )
 import           Data.Text.Read                 ( double )
-import           Data.Text                      ( Text, isSuffixOf )
+import           Data.Text                      ( Text, isSuffixOf, replace )
 import           Data.Maybe                     ( isJust, fromJust, catMaybes )
 import           Data.List                      ( sum )
 
@@ -57,8 +57,7 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU
                              -- We already know that this food name exists in the 'Food'.
                              then fromJust $ HM.lookup (fromJust maybeFood) commonFood
                              -- Take carbohydrates values from carbPer100g input.
-                             else let Right (number, _) = double . fromJust $ maybeCarbs
-                                  in number
+                             else asDouble $ fromJust maybeCarbs
 
         carbsValue = if foodNameIsHere then Just (carbInputId, toFixed 1 carbohydrates) else Nothing
 
@@ -75,8 +74,12 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU
         doCalculate Nothing    Nothing       _     = [Nothing]
 
 asDouble :: Text -> Double
-asDouble (double -> Right (number, _)) = number
-asDouble (double -> _)                 = error "Impossible: text value already validated as a number, fix your code!"
+asDouble (double . anyDecimalSeparator -> Right (number, _)) = number
+asDouble (double . anyDecimalSeparator -> _) = error "Impossible: text value already validated as a number, fix your code!"
+
+-- | We support both decimal separators, point and comma.
+anyDecimalSeparator :: Text -> Text
+anyDecimalSeparator = replace "," "."
 
 -- | Converter from BU to grams, based on carbohydrates value.
 convertBUToGrams :: CarbPer100g -> BU -> Grams
