@@ -23,8 +23,6 @@ import qualified Text.Blaze.Html5.Attributes    as A
 -- | All CSS we use, including our own style.
 allStyles :: Html
 allStyles = do
-    -- Google Font
-    styleFromCDN "https://fonts.googleapis.com/css?family=Comfortaa:400&amp;subset=cyrillic"
     -- Bootstrap tools.
     styleFromCDN "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
     styleFromCDN "https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/css/mdb.min.css"

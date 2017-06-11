@@ -30,7 +30,7 @@ ownCss = minify . Lazy.toStrict . render $ do
     -- There's one monadic context Css. So we can compose whole CSS
     -- from different parts in the same context.
     body ? do
-        fontSizeEm      1.1
+        fontSizeEm      1.2
         backgroundColor "#f4f3ef"
         mainFont
         paddingTopEm    2.0
@@ -235,7 +235,7 @@ ownCss = minify . Lazy.toStrict . render $ do
 
     borderRadiusAll r = borderRadius r r r r
     
-    mainFont = fontFamily ["Comfortaa", "Helvetica Neue", "Calibri Light", "Roboto"] [sansSerif]
+    mainFont = fontFamily ["Droid Sans", "Helvetica Neue", "Roboto", "Helvetica", "Verdana", "Arial"] [sansSerif]
 
     simpleLinks = do
         a           ? color linksColor
