@@ -41,7 +41,7 @@ Please feel free to [open an issue](https://github.com/denisshevchenko/breadu.in
 
 ### Configuration
 
-* `breadu.cabal` - main configuration file.
+* `package.yaml` - main configuration file. I use alternative configuration for Haskell projects, please see [`hpack`](https://github.com/sol/hpack).
 * `stack.yaml` - configuration file for Stack.
 * `circle.yml` - configuration file for CircleCI service.
 * `.codeclimate.yml` - configuration file for Code Climate service.
