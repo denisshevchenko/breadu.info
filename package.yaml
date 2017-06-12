@@ -1,0 +1,78 @@
+# Hpack is an alternative format for Haskell projects.
+# Please see more info about it: https://github.com/sol/hpack.
+
+name:           breadu
+version:        0.3.1
+synopsis:       Bread Unit calculator
+description:    Web-based bread unit calculator for diabetics.
+maintainer:     Denis Shevchenko <me@dshevchenko.biz>
+github:         denisshevchenko/breadu.info
+license:        MIT
+category:       Web
+extra-source-files:
+    - CHANGELOG.md
+    - README.md
+
+# Versions of these packages are defined by Haskell LTS,
+# please see value of 'resolver' field in 'stack.yaml'.
+# You can check packages' versions at https://www.stackage.org/VALUE_OF_RESOLVER.
+# Good practice - keep this list in alphabetical order.
+dependencies:
+    - aeson
+    - base < 5.0
+    - blaze-html
+    - blaze-markup
+    - bytestring
+    - cassava
+    - clay
+    - directory
+    - double-conversion
+    - extra
+    - filepath
+    - hasmin
+    - hjsmin
+    - http-api-data
+    - http-types
+    - optparse-simple
+    - random
+    - servant
+    - servant-blaze
+    - servant-server
+    - shell-conduit
+    - split
+    - string-qq
+    - text
+    - text-show
+    - transformers
+    - unordered-containers
+    - vector
+    - wai
+    - warp
+
+library:
+    source-dirs:      src/lib
+    # This is an "opened" modules of a library.
+    # It means we can import these (and only these) modules in other libraries/programs.
+    exposed-modules:
+        - BreadU 
+    # GHC extensions that will be active in all modules by default.
+    default-extensions:
+        - RecordWildCards
+        - OverloadedStrings
+        - MultiWayIf
+        - ViewPatterns
+    ghc-options:      -Wall -Werror -Wno-orphans -O
+
+executables:
+    # BreadU server.
+    breadu-exe:
+        main:           Main.hs
+        source-dirs:    src/app
+        ghc-options:    -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O
+        dependencies:
+            - breadu
+    # BreadU server updater (using during CI).
+    update-breadu-server:
+        main:           Main.hs
+        source-dirs:    src/app
+        ghc-options:    -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O
