@@ -2,7 +2,7 @@
 # Please see more info about it: https://github.com/sol/hpack.
 
 name:           breadu
-version:        0.3.1
+version:        0.3.2
 synopsis:       Bread Unit calculator
 description:    Web-based bread unit calculator for diabetics.
 maintainer:     Denis Shevchenko <me@dshevchenko.biz>

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.2
+
+* Release date: 15 June 2017.
+* Hpack instead of Cabal.
+
 ## 0.3.1
 
 * Release date: 12 June 2017.
