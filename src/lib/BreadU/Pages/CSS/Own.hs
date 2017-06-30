@@ -48,6 +48,9 @@ ownCss = minify . Lazy.toStrict . render $ do
         paddingTopEm    1.0
         paddingBottomEm 0.7
 
+    p ?
+        fontWeight      (weight 300)
+
     cl LanguageSwitcher ? do
         "margin-top"    -: "0.74em !important"
 
@@ -178,7 +181,7 @@ ownCss = minify . Lazy.toStrict . render $ do
 
     cl Block404Mark0 ? do
         color           "#5899ff"
-        fontSizeEm      1.05
+        fontSizeEm      0.95
         paddingLeftEm   0.09
         paddingRightEm  0.1
 

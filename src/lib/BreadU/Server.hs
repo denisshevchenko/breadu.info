@@ -31,8 +31,8 @@ import           Servant                            ( Server
                                                     , (:<|>)(..)
                                                     , serveDirectory
                                                     )
-import           Data.Maybe                         ( fromJust )
 import           Data.List                          ( lookup )
+import           Data.Maybe                         ( fromMaybe )
 
 -- | Defines the server for serving an API.
 -- Please note that an order of handlers must be exactly the same as in API type!
@@ -52,5 +52,4 @@ server commonFoods =
     :<|> serveDirectory "/var/www" -- Our static content will be served by a real web server, I use Nginx.
     :<|> http404
   where
-    -- We definitely know that food is here.
-    foodFor lang = fromJust $ lookup lang commonFoods
+    foodFor lang = fromMaybe (error "Impossible: no language in common food, fix your code!") $ lookup lang commonFoods

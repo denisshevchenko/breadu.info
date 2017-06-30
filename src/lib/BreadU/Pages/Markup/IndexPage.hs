@@ -43,10 +43,8 @@ import           Text.Blaze.Html.Renderer.Text          ( renderHtml )
 -}
 instance ToMarkup IndexPage where
     -- Render HTML for fake index page.
-    toMarkup (RedirectTo En) = redirectImmediatelyTo $ indexPageLink En
-    toMarkup (RedirectTo De) = redirectImmediatelyTo $ indexPageLink De
-    toMarkup (RedirectTo Ru) = redirectImmediatelyTo $ indexPageLink Ru
-    
+    toMarkup (RedirectTo lang) = redirectImmediatelyTo $ indexPageLink lang
+ 
     -- Render markup for the real, localized index page.
     toMarkup IndexPage{..} = do
         -- We're using blaze-html DSL to build HTML. It's building
@@ -91,7 +89,7 @@ foodFormBlock langCode content@IndexBodyContent{..} = div ! A.class_ (toValue Fo
                ! A.id (toValue AddFoodButtonId)
                ! A.type_ "button"
                ! A.title (toValue addFoodTitle)
-               ! A.onclick (toValue addNewFoodItem) $ do
+               ! A.onclick (toValue addNewFoodItem) $
             span ! A.class_ (toValue MainButtonIcon) $ fa "fa-plus"
 
     -- This button should be submit-button, in this case it can be clicked by Enter key.

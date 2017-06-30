@@ -27,7 +27,7 @@ import           TextShow                       ( showt )
 import           Data.Double.Conversion.Text    ( toFixed )
 import           Data.Text.Read                 ( double )
 import           Data.Text                      ( Text, isSuffixOf, replace )
-import           Data.Maybe                     ( isJust, fromJust, catMaybes )
+import           Data.Maybe                     ( isJust, fromJust, catMaybes, fromMaybe )
 import           Data.List                      ( sum )
 
 -- | Calculate BU/Grams values. 
@@ -55,9 +55,11 @@ calculate FoodInfo{..} commonFood = totalBUValue : buAndGramsResults -- Total BU
         foodNameIsHere = isJust maybeFood
         carbohydrates  = if foodNameIsHere
                              -- We already know that this food name exists in the 'Food'.
-                             then fromJust $ HM.lookup (fromJust maybeFood) commonFood
+                             then fromMaybe (error "Impossible: no carbs value for known food, fix your code!")
+                                            $ HM.lookup (fromJust maybeFood) commonFood
                              -- Take carbohydrates values from carbPer100g input.
-                             else asDouble $ fromJust maybeCarbs
+                             else asDouble $ fromMaybe (error "Impossible: carbs should be here, fix your validation code!")
+                                                       maybeCarbs
 
         carbsValue = if foodNameIsHere then Just (carbInputId, toFixed 1 carbohydrates) else Nothing
 

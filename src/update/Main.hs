@@ -1,6 +1,5 @@
 {-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE MultiWayIf #-}
-{-# LANGUAGE ViewPatterns #-}
 
 {-|
 Module      : Main
@@ -25,10 +24,10 @@ import           Control.Applicative            ( (<|>) )
 import           Data.Monoid                    ( (<>) )
 
 -- | Helper types.
-type Port     = String
-type PID      = String
-data FromPort = From Port
-data ToPort   = To Port
+type Port = String
+type PID  = String
+newtype FromPort = From Port
+newtype ToPort   = To Port
 
 main :: IO ()
 main = run $ do
@@ -40,22 +39,30 @@ main = run $ do
     lookPIDOfCurrentProcess :: Segment (Maybe PID)
     lookPIDOfCurrentProcess = strings (   pgrep "-l" executableName <|> return ()
                                        $| awk "{print $1}")
-                              >>= \output ->
-        return $ if null output then Nothing else Just $ head output
+                              >>= \output -> return $ case output of
+                                                          []      -> Nothing
+                                                          (pid:_) -> Just pid
 
     updateServer :: PID -> Segment ()
     updateServer pidOfCurrentProcess = 
         strings (   sudo "netstat" "-antulp"  -- There's no operator to combine 'sudo' with command... :-(
                  $| grep executableName
-                 $| awk "{split($4,a,\":\"); print a[2]}") >>= \(head -> currentPort) -> do
-            if currentPort == defaultPort
-                then do
-                    startNewServerOn alternativePort
-                    switchNginxToNewServer (From defaultPort) (To alternativePort)
-                else do
-                    startNewServerOn defaultPort
-                    switchNginxToNewServer (From alternativePort) (To defaultPort)
-            stopOldServerBy pidOfCurrentProcess
+                 $| awk "{split($4,a,\":\"); print a[2]}")
+        >>= \output -> case output of
+            [] -> do
+                -- It's really strange: there's no port, but it must be here!
+                startNewServerOn defaultPort
+                switchNginxToNewServer (From alternativePort) (To defaultPort)
+                stopOldServerBy pidOfCurrentProcess
+            (currentPort:_) -> do
+                if currentPort == defaultPort
+                    then do
+                        startNewServerOn alternativePort
+                        switchNginxToNewServer (From defaultPort) (To alternativePort)
+                    else do
+                        startNewServerOn defaultPort
+                        switchNginxToNewServer (From alternativePort) (To defaultPort)
+                stopOldServerBy pidOfCurrentProcess
  
     startNewServerOn :: Port -> Segment ()
     startNewServerOn port = startStopDaemon "--start" "-b" "-q" "-x" pathToExecutable "--" "-p" port "-f" pathToCommonFood

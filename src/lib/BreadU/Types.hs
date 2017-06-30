@@ -28,7 +28,7 @@ data LangCode = En | De | Ru
     deriving (Eq, Enum)
 
 allLanguages :: [LangCode]
-allLanguages = [En .. Ru]
+allLanguages = [En ..]
 
 -- | This instance allows us to convert values
 -- of 'LangCode' type to the strict 'Text', via 'showt' function.

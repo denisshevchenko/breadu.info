@@ -24,6 +24,7 @@ import           BreadU.Types                   ( CompleteFood
                                                 , NewFood(..)
                                                 , CalculationResult(..)
                                                 , LangCode(..)
+                                                , allLanguages
                                                 )
 import           BreadU.Pages.Types             ( IndexPage(..) )
 import           BreadU.Tools.FoodInfoParser    ( prepareFoodInfo )
@@ -39,9 +40,9 @@ import           Servant                        ( Handler )
 import           System.Random                  ( getStdRandom, randomR )
 import           Control.Monad.IO.Class         ( liftIO ) 
 import           TextShow                       ( showt )
-import           Data.Maybe                     ( fromJust )
-import           Data.List                      ( lookup )
+import           Data.List                      ( find, lookup )
 import           Data.Text                      ( isPrefixOf, isInfixOf )
+import           Data.Maybe                     ( fromMaybe )
 import           Data.Monoid                    ( (<>) )
 
 {-|
@@ -52,11 +53,9 @@ import           Data.Monoid                    ( (<>) )
 indexPageCommon :: Maybe ClientLanguage -> Handler IndexPage
 indexPageCommon langHeader = return . RedirectTo $
     case langHeader of
+        Nothing -> En -- No Lang header, it's strange...
         Just (ClientLanguage header) ->
-            if | showt Ru `isPrefixOf` header -> Ru
-               | showt De `isPrefixOf` header -> De
-               | otherwise                    -> En
-        Nothing -> En
+            fromMaybe En $ find (\lang -> showt lang `isPrefixOf` header) allLanguages
 
 -- | Language-specific index page.
 indexPage :: LangCode -> Handler IndexPage
@@ -99,13 +98,11 @@ calculateFood lang (_, food) (FoodInfoFromForm rawFoodInfo)
 
 -- | Handler for AJAX-request during typing food name. We return a few food suggestions.
 autoComplete :: CompleteFoods -> InputedFoodInfo -> Handler FoodSuggestions
-autoComplete commonFoods InputedFoodInfo{..} = do
-    let (orderedNames, _) = fromJust $ lookup langCode commonFoods
-    return FoodSuggestions
-        { suggestionsHTML = optionsForDatalist $ foodSuggestions orderedNames foodNamePart
-        }
+autoComplete commonFoods InputedFoodInfo{..} =
+    case lookup currentLang commonFoods of
+        Nothing -> error "Impossible: common food doesn't contain any supported language, fix your code."
+        Just (orderedNames, _) -> return
+            FoodSuggestions { suggestionsHTML = optionsForDatalist $ foodSuggestions orderedNames foodNamePart
+                            }
   where
-    langCode = if | showt Ru `isInfixOf` currentURL -> Ru
-                  | showt De `isInfixOf` currentURL -> De
-                  | showt En `isInfixOf` currentURL -> En
-                  | otherwise                       -> En
+    currentLang = fromMaybe En $ find (\lang -> showt lang `isInfixOf` currentURL) allLanguages

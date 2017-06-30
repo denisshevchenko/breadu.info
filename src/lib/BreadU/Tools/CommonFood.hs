@@ -31,7 +31,6 @@ import           BreadU.Tools.Validators        ( valueOfCarbsIsValid, minCarbs,
 
 import           Data.Char                      ( toUpper ) 
 import qualified Data.Text                      as T 
-import           Data.Maybe                     ( isNothing, fromJust )
 import           Data.List                      ( nub, sort, find )
 import           Data.Csv                       ( HasHeader (..), decode )
 import           Data.Monoid                    ( (<>) )
@@ -40,7 +39,7 @@ import           Data.Vector                    ( Vector )
 import qualified Data.Vector                    as V
 import qualified Data.HashMap.Strict            as HM
 import           Control.Exception              ( SomeException, catch )
-import           Control.Monad                  ( when, unless, mapM_, forM )
+import           Control.Monad                  ( when, unless, forM, forM_ )
 import           System.FilePath.Posix          ( dropExtension, (</>) )
 import           System.Directory               ( listDirectory )
 import           System.Exit                    ( die )
@@ -55,10 +54,10 @@ loadCommonFood pathToCSVDir = listDirectory pathToCSVDir >>= \allFiles -> do
 
 -- | We have to check if .csv-files for all supported languages are here.
 makeSureWeHaveCSVForAllLanguages :: [FilePath] -> IO [(LangCode, FilePath)]
-makeSureWeHaveCSVForAllLanguages allFiles = forM allLanguages $ \language -> do
-    let csv = find (\file -> dropExtension file == show language) allFiles
-    when (isNothing csv) $ reportAboutMissingCSV language
-    return (language, fromJust csv)
+makeSureWeHaveCSVForAllLanguages allFiles = forM allLanguages $ \language ->
+    case find (\file -> dropExtension file == show language) allFiles of
+        Nothing  -> reportAboutMissingCSV language
+        Just csv -> return (language, csv)
   where
     reportAboutMissingCSV lang = die $ "I cannot find .csv-file for language '" <> show lang <> "'."
 
@@ -115,8 +114,7 @@ makeSureFoodIsValid food =
     
     -- We have to check carb values immediately.
     checkCarbValues :: IO ()
-    checkCarbValues = mapM_ (\(_, carbPer100g) -> unless (valueOfCarbsIsValid carbPer100g) reportAboutInvalidCarbValue)
-                            food
+    checkCarbValues = forM_ food $ \(_, carbPer100g) -> unless (valueOfCarbsIsValid carbPer100g) reportAboutInvalidCarbValue
 
     reportAboutEmptyCSV =
         die "Empty .csv-file, please add at least one food."

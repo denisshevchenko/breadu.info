@@ -11,7 +11,10 @@ module BreadU.Pages.Errors
     ( http404
     ) where
 
-import           BreadU.Types                           ( ClientLanguage(..), LangCode(..) )
+import           BreadU.Types                           ( ClientLanguage(..)
+                                                        , LangCode(..)
+                                                        , allLanguages
+                                                        )
 import           BreadU.Pages.Markup.Errors.HTTP404     ( http404Markup )
 import           BreadU.Pages.Content.Errors.HTTP404    ( http404Content )
 
@@ -20,6 +23,8 @@ import           Network.Wai                            ( Application, responseL
 import           Network.HTTP.Types                     ( status404 )
 import           Network.HTTP.Types.Header
 import qualified Data.Text                              as T
+import           Data.List                              ( find )
+import           Data.Maybe                             ( fromMaybe )
 import           TextShow                               ( showt )
 
 {-|
@@ -29,14 +34,13 @@ import           TextShow                               ( showt )
 -}
 http404 :: Maybe ClientLanguage -> Application
 http404 langHeader _ sendResponse =
-    sendResponse $ responseLBS status404 httpHeaders $ case langHeader of
-    Just (ClientLanguage language) ->
-        if | showt Ru `T.isPrefixOf` language -> page404 Ru
-           | showt De `T.isPrefixOf` language -> page404 De
-           | otherwise                        -> page404 En
-    Nothing -> page404 En
+    sendResponse $ responseLBS status404 httpHeaders $ page404 $
+        case langHeader of
+            Nothing -> En -- No Lang header, it's strange...
+            Just (ClientLanguage language) ->
+                fromMaybe En $ find (\lang -> showt lang `T.isPrefixOf` language) allLanguages
   where
-    page404 langCode = renderMarkup $ http404Markup (http404Content langCode)
+    page404 = renderMarkup . http404Markup . http404Content
 
     httpHeaders :: ResponseHeaders
     httpHeaders = [("Content-Type", "text/html; charset=UTF-8")]
