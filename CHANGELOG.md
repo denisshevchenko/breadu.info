@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.3
+
+* Release date 22 July 2017.
+* Add first test suite, Hspec-based.
+
 ## 0.3.2
 
 * Release date: 15 June 2017.

@@ -2,7 +2,7 @@
 # Please see more info about it: https://github.com/sol/hpack.
 
 name:           breadu
-version:        0.3.2
+version:        0.3.3
 synopsis:       Bread Unit calculator
 description:    Web-based bread unit calculator for diabetics.
 maintainer:     Denis Shevchenko <me@dshevchenko.biz>
@@ -55,13 +55,12 @@ library:
         - vector
         - wai
         - warp
- 
     # GHC extensions that will be active in all modules by default.
     default-extensions:
         - RecordWildCards
         - OverloadedStrings
-        - MultiWayIf
         - ViewPatterns
+        - MultiWayIf
     ghc-options:      -Wall -Werror -Wno-orphans -O
 
 executables:
@@ -83,3 +82,27 @@ executables:
             - filepath
             - shell-conduit
         ghc-options:    -threaded -rtsopts -with-rtsopts=-N -Wall -Werror -O
+
+# Test suite. It will be run via 'stack test' command.
+tests:
+    spec:
+        main:           Spec.hs
+        source-dirs:
+            - test
+            - src/lib
+        dependencies:
+            - aeson
+            - blaze-markup
+            - breadu
+            - double-conversion
+            - hspec
+            - http-api-data
+            - text
+            - text-show
+            - unordered-containers
+            - vector
+        # GHC extensions that will be active in all modules by default.
+        default-extensions:
+            - RecordWildCards
+            - OverloadedStrings
+            - ViewPatterns
